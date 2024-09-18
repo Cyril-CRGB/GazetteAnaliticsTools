@@ -8,4 +8,4 @@ node_modules/
 .github/
 cloudinary_python.txt
 kaggle.json
-Crime_Data_from_2020_to_Present.csv
+inputs/datasets/raw/Crime_Data_from_2020_to_Present.csv
