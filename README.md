@@ -113,3 +113,9 @@ You can now use the `heroku` CLI program - try running `heroku apps` to confirm 
 ## Acknowledgements (optional)
 * Thank the people that provided support through this project.
 
+#Fixed bug
+the input file was to big >100MB so I add to:
+- add the file to .gitignore file
+- install and use Git LFS for tracking the file
+- deleting the csv file with git filter-branch
+- forcing the push to github with the command "git push origin main --force"
