@@ -119,3 +119,6 @@ the input file was to big >100MB so I add to:
 - install and use Git LFS for tracking the file
 - deleting the csv file with git filter-branch
 - forcing the push to github with the command "git push origin main --force"
+
+Some of the variables in the dataset contain NaN. 
+- I had to check and remove those before studying correlations in the Notebook "study"
