@@ -122,3 +122,7 @@ the input file was to big >100MB so I add to:
 
 Some of the variables in the dataset contain NaN. 
 - I had to check and remove those before studying correlations in the Notebook "study"
+
+I dropped a handmade file, and i could not load it in Notebook 2 (2datacleaning), I needed to specifiy delimiter
+
+in 3datastudy i could not use OneHotEncoder (even with drop_last=True) because it made the data overfit
