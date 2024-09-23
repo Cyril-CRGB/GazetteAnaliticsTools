@@ -10,3 +10,4 @@ cloudinary_python.txt
 kaggle.json
 inputs/datasets/raw/*.csv
 outputs/datasets/collection/*.csv
+outputs/datasets/cleaned/*.csv
