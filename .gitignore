@@ -11,3 +11,5 @@ kaggle.json
 inputs/datasets/raw/*.csv
 outputs/datasets/collection/*.csv
 outputs/datasets/cleaned/*.csv
+outputs/datasets/cleaned/*.csv
+outputs/ml_pipeline/predict_amount/v1/*.pkl
