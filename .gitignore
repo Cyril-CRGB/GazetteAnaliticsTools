@@ -13,3 +13,4 @@ outputs/datasets/collection/*.csv
 outputs/datasets/cleaned/*.csv
 outputs/datasets/cleaned/*.csv
 outputs/ml_pipeline/predict_amount/v1/*.pkl
+outputs/ml_pipeline/predict_damage/v1/*.pkl
