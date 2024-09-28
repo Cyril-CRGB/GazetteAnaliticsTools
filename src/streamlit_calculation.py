@@ -2,8 +2,9 @@ import streamlit as st
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-import pingouin as pg
+#import pingouin as pg
 import numpy as np
+from scipy import stats
 from sklearn.preprocessing import LabelEncoder
 
 """
@@ -27,8 +28,10 @@ def distribution_skew_kurtosis(df):
         # Histogram with KDE plot
         sns.histplot(data=df, x=col, kde=True, ax=axes[0])
         axes[0].set_title("Histogram")
-        # QQ plot
-        pg.qqplot(df[col].dropna(), dist='norm', ax=axes[1]) # handling missing values
+        # QQ plot using pingouin
+        # pg.qqplot(df[col].dropna(), dist='norm', ax=axes[1]) # handling missing values
+        # QQ plot using scipy
+        stats.probplot(df[col].dropna(), dist='norm', plot=axes[1])
         axes[1].set_title("QQ Plot")
         plt.tight_layout()
         # Display

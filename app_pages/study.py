@@ -5,7 +5,8 @@ import streamlit as st
 import matplotlib.pyplot as plt
 import seaborn as sns
 from ydata_profiling import ProfileReport
-import pingouin as pg
+# import pingouin as pg
+from scipy import stats
 
 
 from src.streamlit_data_management import load_cleaned_data_short

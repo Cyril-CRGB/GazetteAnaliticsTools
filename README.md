@@ -128,3 +128,7 @@ I dropped a handmade file, and i could not load it in Notebook 2 (2datacleaning)
 in 3datastudy i could not use OneHotEncoder (even with drop_last=True) because it made the data overfit
 
 getting rid of (uninstall) nvidia-nccl-cu12 2.23.4 package to fix slug size issue with heroku
+
+pip freeze > installed_packages.txt
+pip uninstall -r installed_packages.txt -y
+pip install -r requirements.txt
