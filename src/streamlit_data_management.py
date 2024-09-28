@@ -5,7 +5,7 @@ import joblib
 
 @st.cache(suppress_st_warning=True, allow_output_mutation=True)
 def load_original_data():
-    dforigine = pd.read_csv("inputs/datasets/raw/Crime_Data_from_2020_to_Present.csv")
+    dforigine = pd.read_csv("inputs/datasets/raw/Crime_Data_from_2020_to_Present.csv", nrows=20)
     return dforigine
 
 @st.cache(suppress_st_warning=True, allow_output_mutation=True)
