@@ -126,3 +126,5 @@ Some of the variables in the dataset contain NaN.
 I dropped a handmade file, and i could not load it in Notebook 2 (2datacleaning), I needed to specifiy delimiter
 
 in 3datastudy i could not use OneHotEncoder (even with drop_last=True) because it made the data overfit
+
+getting rid of (uninstall) nvidia-nccl-cu12 2.23.4 package to fix slug size issue with heroku
