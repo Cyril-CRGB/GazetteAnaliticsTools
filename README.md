@@ -1,82 +1,135 @@
-# ![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Crime Damage Prediction and Clustering App
 
-## Template Instructions
+## Overview
 
-Welcome,
+This project aims to build a Machine Learning (ML) pipeline for crime damage prediction and clustering. The project involves data analysis, prediction of damage amount (regression), and the grouping of similar criminal incidents using clustering (unsupervised learning).
 
-This is the Code Institute student template for the bring your own data project option in Predictive Analytics. We have preinstalled all of the tools you need to get started. It's perfectly okay to use this template as the basis for your project submissions. Click the `Use this template` button above to get started.
+The app provides actionable insights for decision-making, such as predicting the likely cost of damages and understanding different types of crime patterns through clustering.
 
-You can safely delete the Template Instructions section of this README.md file and modify the remaining paragraphs for your own project. Please do read the Template Instructions at least once, though! It contains some important information about the IDE and the extensions we use.
+This repository includes the code, data, and documentation for the ML pipeline and Streamlit-based web app, with database integrated on Heroku.
+
+See the  Github repository: https://github.com/Cyril-CRGB/PP5_My_project.git
+
+## Project Features
+
+1. Damage Cost Prediction: Predict the cost of damage a crime victim might endure based on various input features (e.g., crime type, location, and victim information).
+2. Clustering: Perform clustering analysis to group crimes into distinct patterns.
+3. Feature Engineering and Analysis: Key steps include data preprocessing, feature engineering, and selecting the most relevant features for the models.
+4. ML Algorithms: We use Random Forest for regression and KMeans for clustering.
+5. Evaluation Metrics: Evaluation using R² score, Mean Absolute Error (MAE), Mean Squared Error (MSE) for regression, and silhouette scores for clustering.
 
 ## How to use this repo
 
-1. Use this template to create your GitHub project repo
+### Setup the Environment
 
-1. Log into your cloud IDE with your GitHub account.
+1. Clone the repo: git clone https://github.com/YourUsername/Crime_Damage_Prediction.git
 
-1. On your Dashboard, click on the New Workspace button
+2. Install the required packages: pip install -r requirements.txt
 
-1. Paste in the URL you copied from GitHub earlier
+3. Load the data: The project works with the crime dataset, which is uploaded in the data/ folder. It includes crime information such as location, victim details, and types of crimes.
 
-1. Click Create
+4. Run the Streamlit app:
 
-1. Wait for the workspace to open. This can take a few minutes.
+### Running the ML Pipelines
 
-1. Open a new terminal and `pip3 install -r requirements.txt`
+To run the Machine Learning pipelines:
 
-1. Open the jupyter_notebooks directory, and click on the notebook you want to open.
+1. Damage Prediction: Run the regression model by navigating to the "Predict Damage" page in the Streamlit app. The model will predict the amount of damage based on crime information.
 
-1. Click the kernel button and choose Python Environments.
-
-Note that the kernel says Python 3.8.18 as it inherits from the workspace, so it will be Python-3.8.18 as installed by our template. To confirm this, you can use `! python --version` in a notebook code cell.
-
-## Cloud IDE Reminders
-
-To log into the Heroku toolbelt CLI:
-
-1. Log in to your Heroku account and go to _Account Settings_ in the menu under your avatar.
-2. Scroll down to the _API Key_ and click _Reveal_
-3. Copy the key
-4. In the terminal, run `heroku_config`
-5. Paste in your API key when asked
-
-
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you so do not share it. If you accidentally make it public then you can create a new one with _Regenerate API Key_.
-
+2. Clustering: Run the clustering algorithm by selecting the "Clustering" page. The app will display the clustering results and provide insights into different crime clusters.
 
 ## Dataset Content
-* Describe your dataset. Choose a dataset of reasonable size to avoid exceeding the repository's maximum size and to have a shorter model training time. If you are doing an image recognition project, we suggest you consider using an image shape that is 100px × 100px or 50px × 50px, to ensure the model meets the performance requirement but is smaller than 100Mb for a smoother push to GitHub. A reasonably sized image set is ~5000 images, but you can choose ~10000 lines for numeric or textual data. 
 
+The dataset used in this project contains detailed records of crimes, including:
+
+Variable	    Description	                                            Units/Options
+DATE OCC	    Date of occurrence of the crime	                        Date
+Vict Sex	    Sex of the victim	                                    M/F/X
+Vict Descent	Victim’s descent	                                    21 different categories
+Premis Desc	    Description of the premises where the crime occurred	Text
+Crm Cd	        Primary code for the crime	                            Integer
+Weapon Desc	    Description of the weapon used in the crime	            Text
+Amount	        Estimated cost of damage	                            Numeric (USD)
+
+Note: In the feature engineering step, some categorical features are encoded, and missing values are imputed using various techniques.
+
+## Project Terms & Jargon
+
+* Damage: The estimated monetary cost associated with the crime.
+* Clustering: Grouping similar crime incidents based on features like location and type of crime.
+* Regression: Predicting the amount of damage in dollars.
 
 ## Business Requirements
-* Describe your business requirements
+
+1. Damage Cost Prediction:
+* Predict the likely damage cost a victim would endure using a regression model. (not finished)
+2. Clustering Analysis:
+* Perform clustering to group crime incidents and gain insights into common crime patterns.
 
 
 ## Hypothesis and how to validate?
-* List here your project hypothesis(es) and how you envision validating it (them) 
+1. Hypothesis: 
+*a* We expected that Damage and Amount would be done depending on the identity of the victim.
+*b* We expected that Damage and Amount would be correlated to the Weapon Used Cd and Crm Cd (crime committed).
+*c* We expected that Damage and Amount would be correlated to Area and Time OCC.
+2. Validation: 
+*a* The correlation study support this, we see that Vict Sex, Vict Descent and Vict Age are amongst the top 6 features.
+*b* The correlation study support this, Weapon Used Cd is in both case the best correlated feature.
+*c* The correlation study does not support this. We really expected crime to occurs at night, outside in the weekend and/or in area where a lot of damage could be caused (richer area).
 
 
-## The rationale to map the business requirements to the Data Visualizations and ML tasks
-* List your business requirements and a rationale to map them to the Data Visualizations and ML tasks
+## ML Models
 
+### Damage Prediction (Regression)
+Model: Random Forest Regressor
+Target: Predicting the Amount (damage cost in USD)
+Features: All other variables except those deemed unnecessary, like dates and non-influential features.
+Evaluation Metrics:
+R² Score
+Mean Absolute Error (MAE)
+Mean Squared Error (MSE)
 
-## ML Business Case
-* In the previous bullet, you potentially visualized an ML task to answer a business requirement. You should frame the business case using the method we covered in the course 
+### Clustering (KMeans)
+Model: KMeans Clustering
+Number of Clusters: Determined using the Elbow Method and Silhouette Scores.
+Features: Key features selected through Principal Component Analysis (PCA).
+Evaluation Metrics:
+Silhouette Score
+Visualization of clusters in relation to key features.
 
+### Model Evaluation
+#### Regression Model Performance
+Train Set:
+R² Score: 0.998
+Mean Absolute Error: 26.97
+Root Mean Squared Error: 363.02
+Test Set:
+R² Score: 0.998
+Mean Absolute Error: 31.23
+Root Mean Squared Error: 347.05
+#### Clustering Performance
+Average Silhouette Score: 0.45
 
 ## Dashboard Design
-* List all dashboard pages and their content, either blocks of information or widgets, like buttons, checkboxes, images, or any other item that your dashboard library supports.
-* Later, during the project development, you may revisit your dashboard plan to update a given feature (for example, at the beginning of the project you were confident you would use a given plot to display an insight but subsequently you used another plot type).
-
+* Summary:
+Provides an overview of the business requirements, the dataset, and key objectives of the project.
+* Data:
+What was done with the data, all operations
+* Study:
+The study about the data that was conducted, allowing me to understand the best way to come to meet the business requirement
+* Hypothesis % Validation.
+* ML Cluster: 
+Displays the clustering results, including the elbow method and silhouette score. Shows visualizations of the cluster distributions.
+Provides detailed profiles of each cluster, including the most common features in each group (e.g., type of crime, location).
 
 
 ## Unfixed Bugs
-* You will need to mention unfixed bugs and why they were not fixed. This section should include shortcomings of the frameworks or technologies used. Although time can be a significant variable to consider, paucity of time and difficulty understanding implementation is not a valid reason to leave bugs unfixed.
+* none that I know of
 
 ## Deployment
 ### Heroku
 
-* The App live link is: https://YOUR_APP_NAME.herokuapp.com/ 
+* The App live link is: https://insuranceprospecter-myproject5-87117df1ba0b.herokuapp.com/
 * Set the runtime.txt Python version to a [Heroku-20](https://devcenter.heroku.com/articles/python-support#supported-runtimes) stack currently supported version.
 * The project was deployed to Heroku using the following steps.
 
@@ -85,62 +138,34 @@ You can now use the `heroku` CLI program - try running `heroku apps` to confirm 
 3. Select your repository name and click Search. Once it is found, click Connect.
 4. Select the branch you want to deploy, then click Deploy Branch.
 5. The deployment process should happen smoothly if all deployment files are fully functional. Click now the button Open App on the top of the page to access your App.
-6. If the slug size is too large then add large files not required for the app to the .slugignore file.
+6. If the slug size is too large then add large files not required for the app to the .slugignore file. Or delete some dependencies. Or like I did also subscribe to heroku postgresql database services.
 
 
 ## Main Data Analysis and Machine Learning Libraries
-* Here you should list the libraries you used in the project and provide an example(s) of how you used these libraries.
+* pandas and numpy and scikit-learn
 
 
 ## Credits 
-
-* In this section, you need to reference where you got your content, media and extra help from. It is common practice to use code from other repositories and tutorials, however, it is important to be very specific about these sources to avoid plagiarism. 
-* You can break the credits section up into Content and Media, depending on what you have included in your project. 
-
-### Content 
-
-- The text for the Home page was taken from Wikipedia Article A
-- Instructions on how to implement form validation on the Sign-Up page was taken from [Specific YouTube Tutorial](https://www.youtube.com/)
-- The icons in the footer were taken from [Font Awesome](https://fontawesome.com/)
-
-### Media
-
-- The photos used on the home and sign-up page are from This Open-Source site
-- The images used for the gallery page were taken from this other open-source site
-
+* I used a lot of content from Code Institute 
 
 
 ## Acknowledgements (optional)
 * Thank the people that provided support through this project.
 
-#Fixed bug
+## Fixed bug
 the input file was to big >100MB so I add to:
 - add the file to .gitignore file
 - install and use Git LFS for tracking the file
 - deleting the csv file with git filter-branch
 - forcing the push to github with the command "git push origin main --force"
 
-Some of the variables in the dataset contain NaN. 
+Some of the variables in the dataset contained NaN. 
 - I had to check and remove those before studying correlations in the Notebook "study"
 
 I dropped a handmade file, and i could not load it in Notebook 2 (2datacleaning), I needed to specifiy delimiter
 
-in 3datastudy i could not use OneHotEncoder (even with drop_last=True) because it made the data overfit
+In the Notebook 3datastudy i could not use OneHotEncoder (even with drop_last=True) because it made the data overfit
 
-getting rid of (uninstall) nvidia-nccl-cu12 2.23.4 package to fix slug size issue with heroku
+I got rid of (uninstall) nvidia-nccl-cu12 2.23.4 package to fix slug size issue with heroku
 
-pip freeze > installed_packages.txt
-pip uninstall -r installed_packages.txt -y
-pip install -r requirements.txt
-
-heroku addons:create heroku-postgresql:essential-0 --app insuranceprospecter-myproject5
-postgresql-objective-19201 
-use heroku addons:info postgresql-objective-19201 to check creation progress
-use heroku addons:docs heroku-postgresql to view documentation
-
-heroku config:get DATABASE_URL --app insuranceprospecter-myproject5
-
-Add to requirements.txt : psycopg2-binary
-add also python-dotenv and sqlalchemy
-
-had to install posgresql on my local machine, fixing path settings on my local machine, then connect to CLI of Heroku in order to puhs my csv file
+I had to install posgresql on my local machine, fixing path settings on my local machine, then connect to CLI of Heroku in order to puhs my csv file

@@ -42,7 +42,7 @@ def cluster_body():
         f"* Finally we profiled the cluster"
     )
 
-    st.write("#### The features the model was trained with")
+    st.write("#### The most important features")
     st.image(best_features)
 
     st.write("#### Clusters Elbow Plot")
