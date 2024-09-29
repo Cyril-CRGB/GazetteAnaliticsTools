@@ -132,3 +132,13 @@ getting rid of (uninstall) nvidia-nccl-cu12 2.23.4 package to fix slug size issu
 pip freeze > installed_packages.txt
 pip uninstall -r installed_packages.txt -y
 pip install -r requirements.txt
+
+heroku addons:create heroku-postgresql:essential-0 --app insuranceprospecter-myproject5
+postgresql-objective-19201 
+use heroku addons:info postgresql-objective-19201 to check creation progress
+use heroku addons:docs heroku-postgresql to view documentation
+
+heroku config:get DATABASE_URL --app insuranceprospecter-myproject5
+
+Add to requirements.txt : psycopg2-binary
+add also python-dotenv and sqlalchemy
