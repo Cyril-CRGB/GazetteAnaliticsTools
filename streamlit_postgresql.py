@@ -2,8 +2,9 @@ import pandas as pd
 from sqlalchemy import create_engine
 import os
 from dotenv import load_dotenv
+import env
 
-load_dotenv() # Load environment variables from .env file
+load_dotenv() # Load environment variables from env.py file
 
 # Heroku DATABASE_URL from environment variables
 DATABASE_URL = os.environ.get('DATABASE_URL')
