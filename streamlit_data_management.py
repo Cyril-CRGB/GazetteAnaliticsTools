@@ -4,11 +4,8 @@ import pandas as pd
 import numpy as np
 import joblib
 import psycopg2 # import the PostgresQL connector
-
-from dotenv import load_dotenv
 import env
 
-load_dotenv()
 
 
 
@@ -16,6 +13,9 @@ load_dotenv()
 @st.cache(suppress_st_warning=True, allow_output_mutation=True)
 def connect_to_db():
     DATABASE_URL = os.environ.get('DATABASE_URL') # Fetch the DATABASE_URL from environnement variables
+    if DATABASE_URL is None:
+        raise ValueError('DATABASE_URL environnement variable is not set')
+    print(f"Connecting to databse at: {DATABASE_URL}")
     conn = psycopg2.connect(DATABASE_URL, sslmode='require') # Connect to the database
     return conn
 
