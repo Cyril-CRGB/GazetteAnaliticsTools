@@ -3,11 +3,12 @@ from sqlalchemy import create_engine
 import os
 from dotenv import load_dotenv
 import env
+import psycopg2 
 
 load_dotenv() # Load environment variables from env.py file
 
 DATABASE_URL = os.environ.get('DATABASE_URL')
-If DATABASE_URL is None:
+if DATABASE_URL is None:
     raise ValueError('DATABASE_URL environnement variable is not set')
 try:
     conn = psycopg2.connect(DATABASE_URL, sslmode='require')
