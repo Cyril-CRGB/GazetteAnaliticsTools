@@ -91,8 +91,8 @@ streamlit page cluster
 def LuxuriusCluster():
     pipeline_base = Pipeline([
         ("OrdinalCategoricalEncoder", OrdinalEncoder(encoding_method='arbitrary',
-                                                variables=['Vict Sex', 'Vict Descent', 'Premis Desc', 'Weapon Desc',
-                                                        'LOCATION', 'Cross Street'])),
+                                                variables=['vict_sex', 'vict_descent', 'premis_desc', 'weapon_desc',
+                                                        'location', 'cross_street'])),
         ("scaler", StandardScaler()),
         ("PCA", PCA(n_components=11, random_state=77)),
         ("model", KMeans(n_clusters=5, random_state=77)),

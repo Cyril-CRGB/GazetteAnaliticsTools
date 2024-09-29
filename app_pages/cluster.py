@@ -21,7 +21,9 @@ def cluster_body():
     # load data
     dfcleanedshort = load_cleaned_data_short()
     # Drop the specified variables from the dataframe
-    dfcleanedshort = dfcleanedshort.drop(labels=['date_occ', 'area_name', 'crm_cd_desc', 'lat', 'lon', 'damage', axis=1])
+    # dfcleanedshort = dfcleanedshort.drop(labels=['date_occ', 'area_name', 'crm_cd_desc', 'lat', 'lon', 'damage'], axis=1)
+    # df = pd.read_csv('outputs/datasets/collection/dataPP5_cleaned_10k.csv')
+    st.write(dfcleanedshort.head(4))
 
     st.write("## ML Cluster")
 
