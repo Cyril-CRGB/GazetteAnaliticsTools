@@ -49,8 +49,8 @@ def convert_categorical_into_numerical(df, variable_name):
 # Function for Feature correlation analysis Spearman
 def feature_correlation_analysis_spearman(df):
     # Convert categorical variables to numerical values 
-    convert_categorical_into_numerical(df, 'Vict Sex')
-    convert_categorical_into_numerical(df, 'Vict Descent')
+    convert_categorical_into_numerical(df, 'Vict_Sex')
+    convert_categorical_into_numerical(df, 'Vict_Descent')
     # Select only numeric columns for correlation
     numeric_df = df.select_dtypes(include=['float64', 'int64'])
     # Calculate the correlation matrix for numeric features using Spearman method
@@ -68,8 +68,8 @@ def feature_correlation_analysis_spearman(df):
 # Function to fetch six best correlated features Spearman
 def six_best_correlated_features_correlation_analysis_spearman(df, variable_name, drop_feature=None):
     # Convert categorical variables to numerical values
-    convert_categorical_into_numerical(df, 'Vict Sex')
-    convert_categorical_into_numerical(df, 'Vict Descent')
+    convert_categorical_into_numerical(df, 'Vict_Sex')
+    convert_categorical_into_numerical(df, 'Vict_Descent')
     # Select only numeric columns for correlation
     numeric_df = df.select_dtypes(include=['float64', 'int64'])
     # Calculate the correlation matrix for numeric features using Spearman method

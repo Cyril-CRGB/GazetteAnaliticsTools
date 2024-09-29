@@ -5,7 +5,7 @@ import streamlit as st
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# from streamlit_data_management import load_original_data
+from streamlit_data_management import load_original_data
 from streamlit_data_management import load_crime_committed_analyses
 from streamlit_data_management import load_cleaned_data_short
 
@@ -16,7 +16,7 @@ sns.set_style('dark')
 def data_body():
 
     # load data
-    # df = load_original_data()
+    df = load_original_data()
     dfcca = load_crime_committed_analyses()
     dfcleanedshort = load_cleaned_data_short()
     
@@ -30,12 +30,12 @@ def data_body():
     )
     
     # display raw data
-    # if st.checkbox("Have a look at the raw data"):
-    #    st.write(
-    #        f"The dataset has {df.shape[0]} rows and {df.shape[1]} columns, "
-    #        f"find below the first rows."
-    #    )
-    #    st.write(df.head(10))
+    if st.checkbox("Have a look at the raw data"):
+        st.write(
+            f"The dataset has {df.shape[0]} rows and {df.shape[1]} columns, "
+            f"find below the first rows."
+        )
+        st.write(df.head(10))
 
     st.write("""---""")
 
@@ -134,11 +134,11 @@ def data_body():
     # display data 'Vict Sex' analyses
     if st.checkbox("Show the variables 'Vict Sex'"):
         # Get all unique values of 'Vict Sex'
-        unique_values_vict_sex = df['Vict Sex'].unique()
+        unique_values_vict_sex = df['vict_sex'].unique()
         unique_values_vict_sex_count = len(unique_values_vict_sex)
         st.write(f"***{unique_values_vict_sex_count} unique values:***")
         # Get the unique values and their counts
-        unique_values_vict_sex_count_2 = df['Vict Sex'].value_counts(dropna=False)
+        unique_values_vict_sex_count_2 = df['vict_sex'].value_counts(dropna=False)
         # Display as dataframe
         st.dataframe(unique_values_vict_sex_count_2.reset_index().rename(columns={'index': 'Victime Sex', 'Vict Sex': 'Count'}))
 
@@ -154,11 +154,11 @@ def data_body():
     # display data 'Vict Descent' analyses
     if st.checkbox("Show the variables 'Vict Descent'"):
         # Get all unique values of 'Vict Descent'
-        unique_values_vict_desc = df['Vict Descent'].unique()
+        unique_values_vict_desc = df['vict_descent'].unique()
         unique_values_vict_desc_count = len(unique_values_vict_desc)
         st.write(f"***{unique_values_vict_desc_count} unique values:***")
         # Get the unique values and their counts
-        unique_values_vict_desc_count_2 = df['Vict Descent'].value_counts(dropna=False)
+        unique_values_vict_desc_count_2 = df['vict_descent'].value_counts(dropna=False)
         # Display as dataframe
         st.dataframe(unique_values_vict_desc_count_2.reset_index().rename(columns={'index': 'Victime Descent', 'Vict Descent': 'Count'}))
 

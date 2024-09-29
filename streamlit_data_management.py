@@ -10,7 +10,7 @@ import psycopg2 # import the PostgresQL connector
 
 
 # Connect to your database
-@st.cache(suppress_st_warning=True, allow_output_mutation=True)
+#@st.cache(suppress_st_warning=True, allow_output_mutation=True)
 def connect_to_db():
     DATABASE_URL = os.environ.get('DATABASE_URL') # Fetch the DATABASE_URL from environnement variables
     if DATABASE_URL is None:
@@ -24,17 +24,17 @@ def connect_to_db():
         return None
 
 
-@st.cache(suppress_st_warning=True, allow_output_mutation=True)
+#@st.cache(suppress_st_warning=True, allow_output_mutation=True)
 def load_original_data():
     conn = connect_to_db()
     if conn is None:
         return pd.DataFrame() # Return empty DataFrame if connection fails
-    query = "SELECT * FROM crime_description_table;" # Update table
+    query = "SELECT * FROM crime_data_from_2020_to_present;" # Update table
     dforigine = pd.read_sql(query, conn) # fetch data from the database
     conn.close() # Close the connection
     return dforigine
 
-@st.cache(suppress_st_warning=True, allow_output_mutation=True)
+#@st.cache(suppress_st_warning=True, allow_output_mutation=True)
 def load_crime_committed_analyses():
     conn = connect_to_db()
     if conn is None:
@@ -44,7 +44,7 @@ def load_crime_committed_analyses():
     conn.close()
     return dfcca
 
-@st.cache(suppress_st_warning=True, allow_output_mutation=True)
+#@st.cache(suppress_st_warning=True, allow_output_mutation=True)
 def load_cleaned_data_short():
     conn = connect_to_db()
     if conn is None:
