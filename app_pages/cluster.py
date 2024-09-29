@@ -18,13 +18,6 @@ def cluster_body():
 
     # load cluster analysis files and pipeline
     version = 'v1'
-    try:
-        cluster_pipe = load_pkl_file(
-            f"outputs/ml_pipeline/cluster_analysis/{version}/LuxuriusCluster.pkl")
-        st.write("Cluster pipeline loaded successfully")
-    except Exception as e:
-        st.error(f"Error loading cluster pipeline: {e}")
-        return
     
     try:
         cluster_elbow = plt.imread(
@@ -48,9 +41,6 @@ def cluster_body():
         f"* We dertermine the number of cluster needed with Elbow and Silhouette methode\n"
         f"* Finally we profiled the cluster"
     )
-
-    st.write("#### Cluster ML Pipeline steps")
-    st.write(cluster_pipe)
 
     st.write("#### The features the model was trained with")
     st.image(best_features)
