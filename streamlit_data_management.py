@@ -14,14 +14,21 @@ import env
 def connect_to_db():
     DATABASE_URL = os.environ.get('DATABASE_URL') # Fetch the DATABASE_URL from environnement variables
     if DATABASE_URL is None:
-        raise ValueError('DATABASE_URL environnement variable is not set')
-    print(f"Connecting to databse at: {DATABASE_URL}")
-    conn = psycopg2.connect(DATABASE_URL, sslmode='require') # Connect to the database
-    return conn
+        st.error('DATABASE_URL is not set.')
+        return None
+    try:
+        conn = psycopg2.connect(DATABASE_URL, sslmode='require') # Connect to the database
+        return conn
+    except Exception as e:
+        st.error(f"Connection to databased failed: {e}")
+        return None
+
 
 @st.cache(suppress_st_warning=True, allow_output_mutation=True)
 def load_original_data():
     conn = connect_to_db()
+    if conn is None:
+        return pd.DataFrame() # Return empty DataFrame if connection fails
     query = "SELECT * FROM crime_description_table;" # Update table
     dforigine = pd.read_sql(query, conn) # fetch data from the database
     conn.close() # Close the connection
@@ -30,6 +37,8 @@ def load_original_data():
 @st.cache(suppress_st_warning=True, allow_output_mutation=True)
 def load_crime_committed_analyses():
     conn = connect_to_db()
+    if conn is None:
+        return pd.DataFrame() # Return empty DataFrame if connection fails
     query = "SELECT * FROM crime_description_table;" # Update table
     dfcca = pd.read_sql(query, conn) # change the delimiter if needed
     conn.close()
@@ -38,6 +47,8 @@ def load_crime_committed_analyses():
 @st.cache(suppress_st_warning=True, allow_output_mutation=True)
 def load_cleaned_data_short():
     conn = connect_to_db()
+    if conn is None:
+        return pd.DataFrame() # Return empty DataFrame if connection fails
     query = "SELECT * FROM crime_description_table;" # Update table
     dfcleanedshort = pd.read_sql(query, conn)
     conn.close()
