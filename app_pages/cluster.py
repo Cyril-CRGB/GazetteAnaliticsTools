@@ -1,17 +1,15 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
-import streamlit as st
 import matplotlib.pyplot as plt
 import seaborn as sns
 from ydata_profiling import ProfileReport
-# import pingouin as pg
 from scipy import stats
-
-
-from streamlit_data_management import load_cleaned_data_short
-from src.streamlit_calculation import distribution_skew_kurtosis, feature_correlation_analysis_spearman, six_best_correlated_features_correlation_analysis_spearman
-from src.streamlit_calculation import LuxuriusCluster, pca_on_streamlit
+from feature_engine.encoding import OrdinalEncoder
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+from sklearn.cluster import KMeans
+from streamlit_data_management import load_pkl_file
 
 
 sns.set_style('dark')
@@ -20,11 +18,26 @@ def cluster_body():
 
     # load cluster analysis files and pipeline
     version = 'v1'
-    cluster_pipe = load_pkl_file(f"outputs/ml_pipeline/cluster_analysis/{version}/LuxuriusCluster.pkl")
-    cluster_elbow = plt.imread(f"outputs/pictures/{version}/elbow_method.png")
-    cluster_silhouette = plt.imread(f"outputs/pictures/{version}/silhouette_score.png")
-    best_features = plt.imread(f"outputs/pictures/{version}/best_features.png")
-    cluster_profile = pd.read_csv(f"outputs/datasets/other/{version}/clusters_profile.csv")
+    try:
+        cluster_pipe = load_pkl_file(
+            f"outputs/ml_pipeline/cluster_analysis/{version}/LuxuriusCluster.pkl")
+        st.write("Cluster pipeline loaded successfully")
+    except Exception as e:
+        st.error(f"Error loading cluster pipeline: {e}")
+        return
+    
+    try:
+        cluster_elbow = plt.imread(
+            f"outputs/pictures/{version}/elbow_method.png")
+        cluster_silhouette = plt.imread(
+            f"outputs/pictures/{version}/silhouette_score.png")
+        best_features = plt.imread(
+            f"outputs/pictures/{version}/best_features.png")
+        cluster_profile = pd.read_csv(
+            f"outputs/datasets/other/{version}/clusters_profile.csv")
+    except FileNotFoundError as e:
+        st.error(f"Error loading files: {e}")
+        return
 
 
     st.write("## ML Cluster")
@@ -35,12 +48,12 @@ def cluster_body():
         f"* We dertermine the number of cluster needed with Elbow and Silhouette methode\n"
         f"* Finally we profiled the cluster"
     )
-    
+
     st.write("#### Cluster ML Pipeline steps")
     st.write(cluster_pipe)
 
     st.write("#### The features the model was trained with")
-    st.write(best_features)
+    st.image(best_features)
 
     st.write("#### Clusters Elbow Plot")
     st.image(cluster_elbow)
@@ -48,6 +61,6 @@ def cluster_body():
     st.write("#### Clusters Silhouette Plot")
     st.image(cluster_silhouette)
         
-    # hack to not display the index in st.table() or st.write()
+    st.write("#### Clusters Profiling")
     cluster_profile.index = [" "] * len(cluster_profile)
     st.table(cluster_profile)

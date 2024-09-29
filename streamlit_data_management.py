@@ -53,3 +53,7 @@ def load_cleaned_data_short():
     dfcleanedshort = pd.read_sql(query, conn)
     conn.close()
     return dfcleanedshort
+
+
+def load_pkl_file(file_path):
+    return joblib.load(filename=file_path)
