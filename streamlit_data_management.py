@@ -29,7 +29,7 @@ def load_original_data():
     conn = connect_to_db()
     if conn is None:
         return pd.DataFrame() # Return empty DataFrame if connection fails
-    query = "SELECT * FROM crime_data_from_2020_to_present LIMIT 1000;" # Update table
+    query = "SELECT * FROM crime_data_from_2020_to_present LIMIT 10000;" # Update table
     dforigine = pd.read_sql(query, conn) # fetch data from the database
     conn.close() # Close the connection
     return dforigine
