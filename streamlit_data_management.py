@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 import joblib
 import psycopg2 # import the PostgresQL connector
-import env
+#import env
 
 
 

@@ -5,7 +5,7 @@ import streamlit as st
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-from streamlit_data_management import load_original_data
+# from streamlit_data_management import load_original_data
 from streamlit_data_management import load_crime_committed_analyses
 from streamlit_data_management import load_cleaned_data_short
 
@@ -16,7 +16,7 @@ sns.set_style('dark')
 def data_body():
 
     # load data
-    df = load_original_data()
+    # df = load_original_data()
     dfcca = load_crime_committed_analyses()
     dfcleanedshort = load_cleaned_data_short()
     
@@ -30,12 +30,12 @@ def data_body():
     )
     
     # display raw data
-    if st.checkbox("Have a look at the raw data"):
-        st.write(
-            f"The dataset has {df.shape[0]} rows and {df.shape[1]} columns, "
-            f"find below the first rows."
-        )
-        st.write(df.head(10))
+    # if st.checkbox("Have a look at the raw data"):
+    #    st.write(
+    #        f"The dataset has {df.shape[0]} rows and {df.shape[1]} columns, "
+    #        f"find below the first rows."
+    #    )
+    #    st.write(df.head(10))
 
     st.write("""---""")
 
