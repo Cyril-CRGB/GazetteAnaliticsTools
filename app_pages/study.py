@@ -76,8 +76,8 @@ def study_body():
 
     # display The correlation analysis
     if st.checkbox("Show top 6 features correlation"):
-        six_best_correlated_features_correlation_analysis_spearman(dfcleanedshort, 'Amount', 'Damage')
-        six_best_correlated_features_correlation_analysis_spearman(dfcleanedshort, 'Damage', 'Amount')
+        six_best_correlated_features_correlation_analysis_spearman(dfcleanedshort, 'amount', 'damage')
+        six_best_correlated_features_correlation_analysis_spearman(dfcleanedshort, 'damage', 'amount')
 
     st.warning(
         f"***Remarques:*** *Feature correlation analysis on numerical variables.* \n"

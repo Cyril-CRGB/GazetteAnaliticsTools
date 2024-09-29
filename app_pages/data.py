@@ -73,8 +73,8 @@ def data_body():
     # Display the checkbox for missing values
     if st.checkbox('Show duplicate count "DR_NO"'):
         # Count occurrences of each 'DR_NO'
-        duplicate_counts = df['DR_NO'].value_counts().reset_index()
-        duplicate_counts.columns = ['DR_NO', 'Count'] # Rename columns
+        duplicate_counts = df['dr_no'].value_counts().reset_index()
+        duplicate_counts.columns = ['dr_no', 'Count'] # Rename columns
         # Filter to show only duplicates (count > 1)
         duplicates_only = duplicate_counts[duplicate_counts['Count'] > 1]
         st.dataframe(duplicates_only)
