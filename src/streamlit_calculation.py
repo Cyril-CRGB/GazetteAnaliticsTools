@@ -6,6 +6,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy import stats
 from sklearn.preprocessing import LabelEncoder
+from sklearn.pipeline import Pipeline
+from feature_engine.encoding import OrdinalEncoder
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+from sklearn.cluster import KMeans
 
 """
 streamlit page study
@@ -79,6 +84,20 @@ def six_best_correlated_features_correlation_analysis_spearman(df, variable_name
         st.write(top_corr_features)
     st.write(" \n")
 
+"""
+streamlit page cluster
+"""
+# Function Pipeline LuxuriusCluster
+def LuxuriusCluster():
+    pipeline_base = Pipeline([
+        ("OrdinalCategoricalEncoder", OrdinalEncoder(encoding_method='arbitrary',
+                                                variables=['Vict Sex', 'Vict Descent', 'Premis Desc', 'Weapon Desc',
+                                                        'LOCATION', 'Cross Street'])),
+        ("scaler", StandardScaler()),
+        ("PCA", PCA(n_components=11, random_state=77)),
+        ("model", KMeans(n_clusters=5, random_state=77)),
+    ])
+    return pipeline_base
 
-
+    
 
