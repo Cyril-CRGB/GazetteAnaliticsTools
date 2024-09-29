@@ -23,10 +23,10 @@ def cluster_body():
     # Drop the specified variables from the dataframe
     if not isinstance(dfcleanedshort, pd.DataFrame):
         #Convert to DataFrame
-        dfcleanedshort = pd.DataFrame(dfcleanedshort)
-    dfcleanedshort = dfcleanedshort.drop(labels=['date_occ', 'area_name', 'crm_cd_desc', 'lat', 'lon', 'damage'], axis=1)
+        dfadapted = pd.DataFrame(dfcleanedshort)
+    dfadapted2 = dfadapted.drop(labels=['date_occ', 'area_name', 'crm_cd_desc', 'lat', 'lon', 'damage'], axis=1)
     # df = pd.read_csv('outputs/datasets/collection/dataPP5_cleaned_10k.csv')
-    st.write(dfcleanedshort.head(4))
+    st.write(dfadapted2.head(4))
 
     st.write("## ML Cluster")
 
