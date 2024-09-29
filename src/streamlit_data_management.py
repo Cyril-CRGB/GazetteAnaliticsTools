@@ -23,7 +23,7 @@ def load_original_data():
 @st.cache(suppress_st_warning=True, allow_output_mutation=True)
 def load_crime_committed_analyses():
     conn = connect_to_db()
-    query = "SELECT * FROM inputs/datasets/raw/Crm_Cd_Desc_analyses.csv;" # Update table
+    query = "SELECT * FROM crime_description_table;" # Update table
     dfcca = pd.read_sql(query, conn) # change the delimiter if needed
     conn.close()
     return dfcca
@@ -31,7 +31,7 @@ def load_crime_committed_analyses():
 @st.cache(suppress_st_warning=True, allow_output_mutation=True)
 def load_cleaned_data_short():
     conn = connect_to_db()
-    query = "SELECT * FROM outputs/datasets/collection/dataPP5_cleaned_10k.csv;" # Update table
+    query = "SELECT * FROM crime_description_table;" # Update table
     dfcleanedshort = pd.read_sql(query, conn)
     conn.close()
     return dfcleanedshort
