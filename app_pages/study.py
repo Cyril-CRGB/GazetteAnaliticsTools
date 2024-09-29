@@ -9,7 +9,7 @@ from ydata_profiling import ProfileReport
 from scipy import stats
 
 
-from src.streamlit_data_management import load_cleaned_data_short
+from streamlit_data_management import load_cleaned_data_short
 from src.streamlit_calculation import distribution_skew_kurtosis, feature_correlation_analysis_spearman, six_best_correlated_features_correlation_analysis_spearman
 
 sns.set_style('dark')

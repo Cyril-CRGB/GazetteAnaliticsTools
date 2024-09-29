@@ -5,9 +5,9 @@ import streamlit as st
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-from src.streamlit_data_management import load_original_data
-from src.streamlit_data_management import load_crime_committed_analyses
-from src.streamlit_data_management import load_cleaned_data_short
+from streamlit_data_management import load_original_data
+from streamlit_data_management import load_crime_committed_analyses
+from streamlit_data_management import load_cleaned_data_short
 
 sns.set_style('dark')
 
