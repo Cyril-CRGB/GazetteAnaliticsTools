@@ -142,3 +142,5 @@ heroku config:get DATABASE_URL --app insuranceprospecter-myproject5
 
 Add to requirements.txt : psycopg2-binary
 add also python-dotenv and sqlalchemy
+
+had to install posgresql on my local machine, fixing path settings on my local machine, then connect to CLI of Heroku in order to puhs my csv file

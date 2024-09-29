@@ -15,7 +15,7 @@ def connect_to_db():
 @st.cache(suppress_st_warning=True, allow_output_mutation=True)
 def load_original_data():
     conn = connect_to_db()
-    query = "SELECT * FROM inputs/datasets/raw/Crime_Data_from_2020_to_Present.csv;" # Update table
+    query = "SELECT * FROM crime_description_table;" # Update table
     dforigine = pd.read_sql(query, conn) # fetch data from the database
     conn.close() # Close the connection
     return dforigine
