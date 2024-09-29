@@ -5,10 +5,17 @@ import numpy as np
 import joblib
 import psycopg2 # import the PostgresQL connector
 
+from dotenv import load_dotenv
+import env
+
+load_dotenv()
+
+
+
 # Connect to your database
 @st.cache(suppress_st_warning=True, allow_output_mutation=True)
 def connect_to_db():
-    DATABASE_URL = os.environ.get('DATABAE_URL') # Fetch the DATABASE_URL from environnement variables
+    DATABASE_URL = os.environ.get('DATABASE_URL') # Fetch the DATABASE_URL from environnement variables
     conn = psycopg2.connect(DATABASE_URL, sslmode='require') # Connect to the database
     return conn
 

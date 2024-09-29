@@ -6,15 +6,11 @@ import env
 
 load_dotenv() # Load environment variables from env.py file
 
-# Heroku DATABASE_URL from environment variables
 DATABASE_URL = os.environ.get('DATABASE_URL')
-
-# Load the csv file into a DataFrame
-csv_file_path = 'inputs/datasets/raw/Crime_Data_from_2020_to_Present.csv' 
-df = pd.read_csv(csv_file_path)
-
-# Create a database engine
-engine = create_engine(DATABASE_URL)
-
-# Write the DataFrame to PostgreSQL
-df.to_sql('crime_data_from_2020_to_present', engine, if_exists='replace', index=False)
+If DATABASE_URL is None:
+    raise ValueError('DATABASE_URL environnement variable is not set')
+try:
+    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+    print('Connected to the database successfully.')
+except Exception as e:
+    print(f"Error connecting to the database: {e}")
