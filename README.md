@@ -22,7 +22,7 @@ See the  Github repository: https://github.com/Cyril-CRGB/PP5_My_project.git
 
 ### Setup the Environment
 
-1. Clone the repo: git clone https://github.com/YourUsername/Crime_Damage_Prediction.git
+1. Clone the repo: git clone https://github.com/Cyril-CRGB/PP5_My_project.git
 
 2. Install the required packages: pip install -r requirements.txt
 
