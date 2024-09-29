@@ -18,27 +18,36 @@ sns.set_style('dark')
 
 def cluster_body():
 
-    # load data
-    dfcleanedshort = load_cleaned_data_short()
-    # Drop the specified variables from the dataframe
-    if not isinstance(dfcleanedshort, pd.DataFrame):
-        #Convert to DataFrame
-        dfadapted = pd.DataFrame(dfcleanedshort)
-    dfadapted2 = dfadapted.drop(labels=['date_occ', 'area_name', 'crm_cd_desc', 'lat', 'lon', 'damage'], axis=1)
-    # df = pd.read_csv('outputs/datasets/collection/dataPP5_cleaned_10k.csv')
-    st.write(dfadapted2.head(4))
+    # load cluster analysis files and pipeline
+    version = 'v1'
+    cluster_pipe = load_pkl_file(f"outputs/ml_pipeline/cluster_analysis/{version}/LuxuriusCluster.pkl")
+    cluster_elbow = plt.imread(f"outputs/pictures/{version}/elbow_method.png")
+    cluster_silhouette = plt.imread(f"outputs/pictures/{version}/silhouette_score.png")
+    best_features = plt.imread(f"outputs/pictures/{version}/best_features.png")
+    cluster_profile = pd.read_csv(f"outputs/datasets/other/{version}/clusters_profile.csv")
+
 
     st.write("## ML Cluster")
 
     st.info(
         f"* We modeled a cluster pipeline. \n"
         f"* We used **Principal Component Analysis (PCA)** to determine the best features to train the model with. \n"
-        f"* \n"
+        f"* We dertermine the number of cluster needed with Elbow and Silhouette methode\n"
+        f"* Finally we profiled the cluster"
     )
-    # display data "Cluster's Pipeline" analyses
-    if st.checkbox("Show the Cluster's Pipeline"):
-        LuxuriusCluster()
+    
+    st.write("#### Cluster ML Pipeline steps")
+    st.write(cluster_pipe)
 
-    # display PCA best features
-    if st.checkbox("Show PCA best features"):
-        pca_on_streamlit(dfcleanedshort)
+    st.write("#### The features the model was trained with")
+    st.write(best_features)
+
+    st.write("#### Clusters Elbow Plot")
+    st.image(cluster_elbow)
+
+    st.write("#### Clusters Silhouette Plot")
+    st.image(cluster_silhouette)
+        
+    # hack to not display the index in st.table() or st.write()
+    cluster_profile.index = [" "] * len(cluster_profile)
+    st.table(cluster_profile)
