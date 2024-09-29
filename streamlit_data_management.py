@@ -49,7 +49,7 @@ def load_cleaned_data_short():
     conn = connect_to_db()
     if conn is None:
         return pd.DataFrame() # Return empty DataFrame if connection fails
-    query = "SELECT * FROM crime_description_table;" # Update table
+    query = "SELECT * FROM dataPP5_cleaned_10k;" # Update table
     dfcleanedshort = pd.read_sql(query, conn)
     conn.close()
     return dfcleanedshort
