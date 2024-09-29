@@ -87,7 +87,7 @@ def six_best_correlated_features_correlation_analysis_spearman(df, variable_name
 """
 streamlit page cluster
 """
-# Function Pipeline LuxuriusCluster
+# Function Pipeline LuxuriusCluster, from 7Cluster.ipynb
 def LuxuriusCluster():
     pipeline_base = Pipeline([
         ("OrdinalCategoricalEncoder", OrdinalEncoder(encoding_method='arbitrary',
@@ -99,5 +99,30 @@ def LuxuriusCluster():
     ])
     return pipeline_base
 
+# Function for PCA, from 7Cluster.ipynb
+def pca_on_streamlit(df):
+    pipeline_cluster = LuxuriusCluster()
+    pipeline_pca = Pipeline(pipeline_cluster.steps[:-2])
+    df_pca = pipeline_pca.fit_transform(df)
+    # Set the number of components as all columns in the data, we are aiming for 90%
+    n_components = 11
+    # Set PCA object and fit to the data
+    pca = PCA(n_components=n_components).fit(df_pca)
+    # Array with transformed PCA
+    x_PCA = pca.transform(df_pca)
+    # the PCA object has .explained_variance_ratio_ attribute, which tells
+    # how much information (variance) each component has
+    # We store that to a DataFrame relating each component to its variance explanation
+    ComponentsList = ["Component " + str(number) for number in range(n_components)]
+    dfExplVarRatio = pd.DataFrame(
+        data= np.round(100 * pca.explained_variance_ratio_, 3),
+        index=ComponentsList,
+        columns=['Explained Variance Ratio %)']
+    )
+    # prints how much of the dataset these components explain (naturally in this case will be 100%)
+    PercentageOfDataExplained = dfExplVarRatio['Explained Variance Ratio %)'].sum()
+    # Display
+    print(f"* The {n_components} components explain {round(PercentageOfDataExplained,2)}% of the data \n")
+    print(dfExplVarRatio)
     
 
