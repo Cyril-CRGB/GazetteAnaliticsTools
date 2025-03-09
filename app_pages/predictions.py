@@ -9,7 +9,7 @@ from streamlit_data_management import load_crime_committed_analyses
 from streamlit_data_management import load_cleaned_data_short
 from streamlit_data_management import load_pkl_file
 
-#from src.streamlit_calculation import predict_cluster # to code
+from src.streamlit_calculation import predict_cluster
 
 sns.set_style('dark')
 
@@ -28,6 +28,8 @@ def predictions_body():
     cluster_pipeline = load_pkl_file(f"outputs/ml_pipeline/cluster_analysis/{version}/LuxuriusCluster.pkl")
     cluster_profile = pd.read_csv(f"outputs/datasets/other/{version}/clusters_profile.csv")
 
+
+
     st.write("## Predictions")
     st.info(
         f"* Enter the individual informations and find out the risk involved, and the subscribtion fee to charge.\n"
@@ -36,12 +38,15 @@ def predictions_body():
 
     # Generate Live Data
     check_variables_for_UI(cluster_features_testing)
+    st.write(cluster_features_testing)
     X_live = DrawInputsWidgets()
+    st.write(X_live)
 
     # Predict on live data
     if st.button("Make Prediction"):
-        predict_cluster(X_Live, cluster_features_testing, cluster_pipeline, cluster_profile)
+        predict_cluster(X_live, cluster_features_testing, cluster_pipeline, cluster_profile)
 
+    
 
 def check_variables_for_UI(cluster_features_testing):
     import itertools
@@ -67,6 +72,7 @@ def DrawInputsWidgets():
     # Creating input widgets for 5 features
     col1, col2, col3 = st.beta_columns(3)
     col4, col5 = st.beta_columns(2)
+    col6, col7, col8 = st.beta_columns(3)
 
     #Using the features to feed the ML Pipeline -> values from check_variables_for_UI() result
 
@@ -86,18 +92,19 @@ def DrawInputsWidgets():
     X_live[feature] = st_widget
 
     with col2:
-        feature_cd = "Weapon Used Cd" # the value we want to store
+        feature = "Weapon Used Cd" # the value we want to store
         feature_desc = "Weapon Desc" # the value we want to display
         # drop missing values and create a mapping dictionary
-        weapon_mapping = dftesting.dropna(subset=[feature_cd, feature_desc]).drop_duplicates(subset=[feature_cd, feature_desc]).set_index(feature_desc)[feature_cd].to_dict()
+        weapon_mapping = dftesting.dropna(subset=[feature, feature_desc]).drop_duplicates(subset=[feature, feature_desc]).set_index(feature_desc)[feature].to_dict()
         # show descriptions (Weapon Desc) in the dropdown
         widget_desc = st.selectbox(
             label="Weapon ownership or regularly seen",
             options=list(weapon_mapping.keys()) # display only weapon descriptions
         )
         # convert back to the corresponding weapon Used Cd
-        widget_cd = weapon_mapping[widget_desc]
-    X_live[feature] = widget_cd
+        st_widget = weapon_mapping[widget_desc]
+    X_live[feature] = st_widget
+    X_live[feature_desc] = widget_desc
 
     with col3:
         feature = "Vict Age"
@@ -126,7 +133,31 @@ def DrawInputsWidgets():
         )
     X_live[feature] = st_widget
 
-    st.write(X_live)
+    with col6:
+        feature = "Vict Descent"
+        st_widget = st.selectbox(
+            label="Origine",
+            options=dftesting[feature].unique()
+        )
+    X_live[feature] = st_widget
+
+    with col7:
+        feature = "LOCATION"
+        st_widget = st.selectbox(
+            label="Location",
+            options=dftesting[feature].unique()
+        )
+    X_live[feature] = st_widget
+
+    with col8:
+        feature = "Cross Street"
+        st_widget = st.selectbox(
+            label="Cross Street",
+            options=dftesting[feature].unique()
+        )
+    X_live[feature] = st_widget
+
+    #st.write(X_live)
 
     return X_live
 

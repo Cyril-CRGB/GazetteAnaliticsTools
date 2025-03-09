@@ -84,3 +84,36 @@ def six_best_correlated_features_correlation_analysis_spearman(df, variable_name
         st.write(top_corr_features)
     st.write(" \n")
 
+# Function to predict cluster
+def predict_cluster(X_live, cluster_features, cluster_pipeline, cluster_profile):
+
+    #'X_live' is the live data input from the user via Streamlit widgets
+    #'cluster_features' contains only the relevant features used by the clustering model
+    #'x_live_cluster' is created by filtering only these features from X_live
+    #subset the live Data for Clustering:
+    x_live_cluster= X_live.filter(cluster_features)
+
+    #'cluster_pipeline' is the trained clustering model
+    #'.predict()' method assigns the new user to a specific cluster based on the model
+    #'cluster_predictin[0]' stores the predicted cluster number
+    #use the clustering model to predict the cluster:
+    cluster_prediction = cluster_pipeline.predict(x_live_cluster)
+
+
+    #display the cluster prediction
+    statement = (f"### The prospect is expected to belong to **cluster {cluster_prediction[0]}**")
+    st.write("---")
+    st.write(statement)
+
+    #provide a risk-based analysis for the damage
+    #'based on past data...
+
+    #explain cluster profiles for user understanding
+    #This cluster profile... 
+
+    #also add cluster importance graph, see 7Cluster.ipynb
+
+    #display the cluster profile as a table
+    cluster_profile.index = [" "] * len(cluster_profile)
+    st.table(cluster_profile)
+
