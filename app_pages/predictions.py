@@ -85,7 +85,7 @@ def DrawInputsWidgets():
         feature = "Vict Sex"
         st_widget = st.selectbox(
             label="Sex or Gender",
-            options=dfcleanedshort[feature].unique()
+            options=dfcleanedshort['vict_sex'].unique()
         )
     X_live[feature] = st_widget
 
@@ -93,7 +93,7 @@ def DrawInputsWidgets():
         feature = "Weapon Used Cd" # the value we want to store
         feature_desc = "Weapon Desc" # the value we want to display
         # drop missing values and create a mapping dictionary
-        weapon_mapping = dfcleanedshort.dropna(subset=[feature, feature_desc]).drop_duplicates(subset=[feature, feature_desc]).set_index(feature_desc)[feature].to_dict()
+        weapon_mapping = dfcleanedshort.dropna(subset=['weapon_used_cd', 'weapon_desc']).drop_duplicates(subset=['weapon_used_cd', 'weapon_desc']).set_index(feature_desc)['weapon_used_cd'].to_dict()
         # show descriptions (Weapon Desc) in the dropdown
         widget_desc = st.selectbox(
             label="Weapon ownership or regularly seen",
@@ -109,8 +109,8 @@ def DrawInputsWidgets():
         st_widget = st.number_input(
             label="Age",
             min_value=int(0),
-            max_value=int(dfcleanedshort[feature].max()),
-            value=int(dfcleanedshort[feature].median()),
+            max_value=int(dfcleanedshort['vict_age'].max()),
+            value=int(dfcleanedshort['vict_age'].median()),
             step=1
         )
     X_live[feature] = st_widget
@@ -119,7 +119,7 @@ def DrawInputsWidgets():
         feature = "Premis Desc"
         st_widget = st.selectbox(
             label="Location most often visited",
-            options=dfcleanedshort[feature].unique()
+            options=dfcleanedshort['premis_desc'].unique()
         )
     X_live[feature] = st_widget
 
@@ -127,7 +127,7 @@ def DrawInputsWidgets():
         feature = "Amount"
         st_widget = st.selectbox(
             label="Value in $ of the good at risk",
-            options=dfcleanedshort[feature].unique()
+            options=dfcleanedshort['amount'].unique()
         )
     X_live[feature] = st_widget
 
