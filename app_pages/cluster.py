@@ -27,14 +27,19 @@ def cluster_body():
             f"outputs/pictures/{version1}/silhouette_score.png")
         best_features = plt.imread(
             f"outputs/pictures/{version1}/best_features_v1.png")
+        cluster_frequencies = plt.imread(
+            f"outputs/pictures/{version1}/cluster_frequencies_v1.png")  
         cluster_profile = pd.read_csv(
             f"outputs/datasets/other/{version1}/clusters_profile.csv")
+
         cluster_elbow_v2 = plt.imread(
             f"outputs/pictures/{version2}/elbow_method_v2.png")
         cluster_silhouette_v2 = plt.imread(
             f"outputs/pictures/{version2}/silhouette_score_v2.png")
         best_features_v2 = plt.imread(
             f"outputs/pictures/{version2}/best_features_v2.png")
+        cluster_frequencies_v2 = plt.imread(
+            f"outputs/pictures/{version2}/cluster_frequencies_v2.png")
         cluster_profile_v2 = pd.read_csv(
             f"outputs/datasets/other/{version2}/clusters_profile_v2.csv")
         confusion_matrix_v2 = plt.imread(
@@ -64,6 +69,9 @@ def cluster_body():
         st.write("#### The most important features")
         st.image(best_features)
 
+        st.write("#### Cluster frequencies")
+        st.image(cluster_frequencies)
+
         st.write("#### Clusters Elbow Plot")
         st.image(cluster_elbow)
 
@@ -72,12 +80,16 @@ def cluster_body():
             
         st.write("#### Clusters Profiling")
         cluster_profile.index = [" "] * len(cluster_profile)
-        st.table(cluster_profile)
+        st.dataframe(cluster_profile, height=300)
+
     with col2:
         st.write("## Best features")
         st.write("")
         st.write("#### The most important features")
         st.image(best_features_v2)
+
+        st.write("#### Cluster frequencies")
+        st.image(cluster_frequencies_v2)
 
         st.write("#### Clusters Elbow Plot")
         st.image(cluster_elbow_v2)
@@ -87,10 +99,10 @@ def cluster_body():
             
         st.write("#### Clusters Profiling")
         cluster_profile_v2.index = [" "] * len(cluster_profile_v2)
-        st.table(cluster_profile_v2)
+        st.dataframe(cluster_profile_v2, height=300)
 
     st.success(
-        f"* The pipeline trained with only 5 features, is different than the one trained with all the features. \n"
+        f"* The pipeline trained with only 5 features, is different than the one trained with all the features. It would need to be improved by further developpement. \n"
         f"* We decided to keep 5 clusters, although the reduced model indicated that 4 was more suitable. \n"
         f"* Here is the confusion matrix with both data, we can see that the only Cluster 'comparable' is the 'All 1' and 'Best 1': \n"
     )
