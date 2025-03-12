@@ -21,6 +21,9 @@ def predictions_body():
     dfcca = load_crime_committed_analyses()
     dfcleanedshort = load_cleaned_data_short()
 
+    dfcleanedshort.columns = dfcleanedshort.columns.str.title().str.replace(" ", "_")
+    print(dfcleanedshort.columns)
+
     #load cluster analysis files
     version = 'v2'
     #cluster_features = (dfcleanedshort.columns.to_list())
