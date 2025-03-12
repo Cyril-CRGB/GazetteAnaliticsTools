@@ -80,6 +80,7 @@ def DrawInputsWidgets():
     X_live = pd.DataFrame([], index=[0])
 
     dfcleanedshort.columns = dfcleanedshort.columns.str.title().str.replace(" ", "_")
+    print(dfcleanedshort.columns)
 
     # from here on we draw the widget based on the variable type (numerical or categorical)
     # and set initial values
