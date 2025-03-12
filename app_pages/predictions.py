@@ -22,7 +22,7 @@ def predictions_body():
     dfcleanedshort = load_cleaned_data_short()
 
     dfcleanedshort.columns = dfcleanedshort.columns.str.title().str.replace(" ", "_")
-    print(dfcleanedshort.columns)
+    st.write(dfcleanedshort.columns)
 
     #load cluster analysis files
     version = 'v2'
