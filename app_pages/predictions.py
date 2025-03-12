@@ -17,9 +17,9 @@ sns.set_style('dark')
 def predictions_body():
 
     #load data
-    df = load_original_data()
-    dfcca = load_crime_committed_analyses()
-    dfcleanedshort = load_cleaned_data_short()
+    #df = load_original_data()
+    #dfcca = load_crime_committed_analyses()
+    #dfcleanedshort = load_cleaned_data_short()
 
     #dfcleanedshort.columns = dfcleanedshort.columns.str.title().str.replace("_", " ")
     #st.write(dfcleanedshort.columns)
@@ -72,11 +72,11 @@ def check_variables_for_UI(cluster_features_testing):
 def DrawInputsWidgets():
 
     #load data
-    df = load_original_data()
-    dfcca = load_crime_committed_analyses()
-    dfcleanedshort = load_cleaned_data_short()
-    #version = 'v1'
-    #dftesting = pd.read_csv(f"outputs/datasets/datacleaned/{version}/dataPP5_cleaned_10k.csv")
+    #df = load_original_data()
+    #dfcca = load_crime_committed_analyses()
+    #dfcleanedshort = load_cleaned_data_short()
+    version = 'v1'
+    dftesting = pd.read_csv(f"outputs/datasets/datacleaned/{version}/dataPP5_cleaned_10k.csv")
 
     # Creating input widgets for 5 features
     col1, col2, col3 = st.columns(3)
@@ -90,8 +90,8 @@ def DrawInputsWidgets():
     #create an empty DataFrame, which will be the live data
     X_live = pd.DataFrame([], index=[0])
 
-    dfcleanedshort.columns = dfcleanedshort.columns.str.title().str.replace("_", " ")
-    st.write(dfcleanedshort.columns)
+    #dfcleanedshort.columns = dfcleanedshort.columns.str.title().str.replace("_", " ")
+    #st.write(dfcleanedshort.columns)
 
     # from here on we draw the widget based on the variable type (numerical or categorical)
     # and set initial values
@@ -99,7 +99,7 @@ def DrawInputsWidgets():
         feature = "Vict Sex"
         st_widget = st.selectbox(
             label="Sex or Gender",
-            options=dfcleanedshort[feature].unique()
+            options=dftesting[feature].unique()
         )
     X_live[feature] = st_widget
 
@@ -107,7 +107,7 @@ def DrawInputsWidgets():
         feature = "Weapon Used Cd" # the value we want to store
         feature_desc = "Weapon Desc" # the value we want to display
         # drop missing values and create a mapping dictionary
-        weapon_mapping = dfcleanedshort.dropna(subset=[feature, feature_desc]).drop_duplicates(subset=[feature, feature_desc]).set_index(feature_desc)[feature].to_dict()
+        weapon_mapping = dftesting.dropna(subset=[feature, feature_desc]).drop_duplicates(subset=[feature, feature_desc]).set_index(feature_desc)[feature].to_dict()
         # show descriptions (Weapon Desc) in the dropdown
         widget_desc = st.selectbox(
             label="Weapon ownership or regularly seen",
@@ -123,8 +123,8 @@ def DrawInputsWidgets():
         st_widget = st.number_input(
             label="Age",
             min_value=int(0),
-            max_value=int(dfcleanedshort[feature].max()),
-            value=int(dfcleanedshort[feature].median()),
+            max_value=int(dftesting[feature].max()),
+            value=int(dftesting[feature].median()),
             step=1
         )
     X_live[feature] = st_widget
@@ -133,7 +133,7 @@ def DrawInputsWidgets():
         feature = "Premis Desc"
         st_widget = st.selectbox(
             label="Location most often visited",
-            options=dfcleanedshort[feature].unique()
+            options=dftesting[feature].unique()
         )
     X_live[feature] = st_widget
 
@@ -141,7 +141,7 @@ def DrawInputsWidgets():
         feature = "Amount"
         st_widget = st.selectbox(
             label="Value in $ of the good at risk",
-            options=dfcleanedshort[feature].unique()
+            options=dftesting[feature].unique()
         )
     X_live[feature] = st_widget
 
