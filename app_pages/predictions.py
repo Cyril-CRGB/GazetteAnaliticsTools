@@ -43,6 +43,14 @@ def predictions_body():
     X_live = DrawInputsWidgets()
     #st.write(X_live)
 
+    z_live_cluster = X_live.filter(cluster_features_testing)
+    z_live_cluster = z_live_cluster[cluster_features_testing]
+    z_live_cluster = pd.DataFrame(z_live_cluster)
+    pipeline_features = cluster_pipeline.named_steps["OrdinalCategoricalEncoder"].variables
+    if list(z_live_cluster.columns) != list(pipeline_features):
+        statement = (f"Column mismatch! Expected: {pipeline_features}, but got: {list(z_live_cluster.columns)}")
+        st.write(statement)
+
     # Predict on live data
     if st.button("Make Prediction"):
         predict_cluster(X_live, cluster_features_testing, cluster_pipeline, cluster_profile)
