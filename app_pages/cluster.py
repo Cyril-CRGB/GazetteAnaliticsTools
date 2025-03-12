@@ -61,7 +61,7 @@ def cluster_body():
     )
 
     #create two columns
-    col1, col2 = st.beta_columns(2)
+    col1, col2 = st.columns(2) # on test environnement write st.beta_columns
 
     with col1:
         st.write("## All features")

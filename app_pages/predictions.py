@@ -68,8 +68,8 @@ def DrawInputsWidgets():
     #dftesting = pd.read_csv(f"outputs/datasets/datacleaned/{version}/dataPP5_cleaned_10k.csv")
 
     # Creating input widgets for 5 features
-    col1, col2, col3 = st.beta_columns(3)
-    col4, col5 = st.beta_columns(2)
+    col1, col2, col3 = st.columns(3)
+    col4, col5 = st.columns(2) #on test environnement write:st.beta_columns
     #col6, col7, col8 = st.beta_columns(3)
 
     #Using the features to feed the ML Pipeline -> values from check_variables_for_UI() result
