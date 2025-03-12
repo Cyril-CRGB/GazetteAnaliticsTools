@@ -15,7 +15,6 @@ kiwisolver==1.4.7
 matplotlib==3.7.5
 narwhals==1.30.0
 numpy==1.24.4
-nvidia-nccl-cu12==2.25.1
 pandas==2.0.3
 patsy==1.0.1
 pillow==10.4.0
