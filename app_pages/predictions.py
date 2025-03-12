@@ -22,13 +22,11 @@ def predictions_body():
     ## dfcleanedshort = load_cleaned_data_short()
 
     #load cluster analysis files
-    version = 'v1'
+    version = 'v2'
     ## cluster_features = (dfcleanedshort.columns.to_list())
-    cluster_features_testing = (pd.read_csv(f"outputs/datasets/datacleaned/{version}/dataPP5_cleaned_10k.csv").columns.to_list())
-    cluster_pipeline = load_pkl_file(f"outputs/ml_pipeline/cluster_analysis/{version}/LuxuriusCluster.pkl")
-    cluster_profile = pd.read_csv(f"outputs/datasets/other/{version}/clusters_profile.csv")
-
-
+    cluster_features_testing = ['Vict Sex', 'Weapon Used Cd', 'Premis Desc', 'Vict Age', 'Amount']
+    cluster_pipeline = load_pkl_file(f"outputs/ml_pipeline/cluster_analysis/{version}/LuxuriusClusterv2.pkl")
+    cluster_profile = pd.read_csv(f"outputs/datasets/other/{version}/clusters_profile_v2.csv")
 
     st.write("## Predictions")
     st.info(
@@ -37,10 +35,10 @@ def predictions_body():
     st.write("---")
 
     # Generate Live Data
-    check_variables_for_UI(cluster_features_testing)
-    st.write(cluster_features_testing)
+    #check_variables_for_UI(cluster_features_testing)
+    #st.write(cluster_features_testing)
     X_live = DrawInputsWidgets()
-    st.write(X_live)
+    #st.write(X_live)
 
     # Predict on live data
     if st.button("Make Prediction"):
@@ -72,7 +70,7 @@ def DrawInputsWidgets():
     # Creating input widgets for 5 features
     col1, col2, col3 = st.beta_columns(3)
     col4, col5 = st.beta_columns(2)
-    col6, col7, col8 = st.beta_columns(3)
+    #col6, col7, col8 = st.beta_columns(3)
 
     #Using the features to feed the ML Pipeline -> values from check_variables_for_UI() result
 
@@ -104,7 +102,7 @@ def DrawInputsWidgets():
         # convert back to the corresponding weapon Used Cd
         st_widget = weapon_mapping[widget_desc]
     X_live[feature] = st_widget
-    X_live[feature_desc] = widget_desc
+    #X_live[feature_desc] = widget_desc
 
     with col3:
         feature = "Vict Age"
@@ -129,30 +127,6 @@ def DrawInputsWidgets():
         feature = "Amount"
         st_widget = st.selectbox(
             label="Value in $ of the good at risk",
-            options=dftesting[feature].unique()
-        )
-    X_live[feature] = st_widget
-
-    with col6:
-        feature = "Vict Descent"
-        st_widget = st.selectbox(
-            label="Origine",
-            options=dftesting[feature].unique()
-        )
-    X_live[feature] = st_widget
-
-    with col7:
-        feature = "LOCATION"
-        st_widget = st.selectbox(
-            label="Location",
-            options=dftesting[feature].unique()
-        )
-    X_live[feature] = st_widget
-
-    with col8:
-        feature = "Cross Street"
-        st_widget = st.selectbox(
-            label="Cross Street",
             options=dftesting[feature].unique()
         )
     X_live[feature] = st_widget

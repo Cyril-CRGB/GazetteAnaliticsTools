@@ -4,6 +4,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 #import pingouin as pg
 import numpy as np
+import re
 from scipy import stats
 from sklearn.preprocessing import LabelEncoder
 from sklearn.pipeline import Pipeline
@@ -101,19 +102,57 @@ def predict_cluster(X_live, cluster_features, cluster_pipeline, cluster_profile)
 
 
     #display the cluster prediction
-    statement = (f"### The prospect is expected to belong to **cluster {cluster_prediction[0]}**")
+    statement = (f"### The individual is expected to belong to **cluster {cluster_prediction[0]}**")
     st.write("---")
     st.write(statement)
 
-    #provide a risk-based analysis for the damage
-    #'based on past data...
+    #filter cluster_profile to show only the row corresponding to the predicted cluster
+    filtered_cluster_profile = cluster_profile[cluster_profile['Cluster'] == cluster_prediction[0]]
 
-    #explain cluster profiles for user understanding
-    #This cluster profile... 
+    #display the filtered table
+    st.table(filtered_cluster_profile)
 
-    #also add cluster importance graph, see 7Cluster.ipynb
+    #explain cluster profiles for user understanding and suggest minimal subscription fees
 
-    #display the cluster profile as a table
-    cluster_profile.index = [" "] * len(cluster_profile)
-    st.table(cluster_profile)
+    #extract the 'Damage' column data for the predicted cluster and only the value for '1'
+    damage_info = cluster_profile.loc[cluster_prediction[0], 'Damage']
+    damage_percentage = re.search(r"\s*'1':\s*(\d+)%", damage_info)
+    damage_value = damage_percentage.group(1) if damage_percentage else "N/A" # Handle errors 
+
+    #success message 1
+    message = (
+        f"The individual is predicted to have a **{damage_value}%** chance of beeing victime of a damage within the next 3 years."
+    )
+    st.success(message)
+
+    #extract the 'Amount' column data for the predicted cluster
+    amount_info = cluster_profile.loc[cluster_prediction[0], 'Amount']
+    amount_value = amount_info.split(" -- ")
+    amount_min = float(amount_value[0])
+    amount_max = float(amount_value[1])
+    #handle zero-cost case 
+    if amount_min == 0.0 and amount_max == 0.0:
+        amount_text = 'there is no estimated **damage cost** involved (below threshold)'
+    elif amount_min == 20000.0 and amount_max == 20000.00:
+        amount_text = 'the estimated **damage cost** involved would be the maximum damage (above threshold)'
+    else:
+        amount_text = f"the estimated **damage cost** would fall within a range from **${amount_min:,.2f}** to **${amount_max:,.2f}**"
+
+    #success message 2
+    message_amount = (
+        f"In this case scenario, {amount_text}."
+    )
+    st.success(message_amount)
+
+    #success message 3
+    subscription_fee = (float(damage_value) / 100 * float(amount_max) / 3) * 1.25
+    if subscription_fee == 0.00:
+        subscription_text = '$125 per year'
+    else:
+        subscription_text = f"${subscription_fee:.2f} per year"
+    message_subscription = (
+        f"The suggested subscription fee would be **{subscription_text}** with a contract duration of **3 years**."
+    )
+    st.success(message_subscription)
+
 
