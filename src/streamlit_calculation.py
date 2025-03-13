@@ -136,7 +136,7 @@ def predict_cluster(X_live, cluster_features, cluster_pipeline, cluster_profile)
     elif amount_min == 20000.0 and amount_max == 20000.00:
         amount_text = 'the estimated **damage cost** involved would be the maximum damage (above threshold)'
     else:
-        amount_text = f"the estimated **damage cost** would fall within a range from **${amount_min:,.2f}** to **${amount_max:,.2f}**"
+        amount_text = f"the estimated **damage cost** would fall within a range from **${amount_min:,.2f} to ${amount_max:,.2f}**"
 
     #success message 2
     message_amount = (

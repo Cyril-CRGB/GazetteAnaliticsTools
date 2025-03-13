@@ -21,7 +21,7 @@ def predictions_body_prod():
     dfcca = load_crime_committed_analyses()
     dfcleanedshort = load_cleaned_data_short()
 
-    dfcleanedshort.columns = dfcleanedshort.columns.str.title().str.replace("_", " ")
+    #dfcleanedshort.columns = dfcleanedshort.columns.str.title().str.replace("_", " ")
     #st.write(dfcleanedshort.columns)
 
     #load cluster analysis files
@@ -67,7 +67,7 @@ def DrawInputsWidgets():
     #create an empty DataFrame, which will be the live data
     X_live = pd.DataFrame([], index=[0])
 
-    dfcleanedshort.columns = dfcleanedshort.columns.str.title().str.replace("_", " ")
+    #dfcleanedshort.columns = dfcleanedshort.columns.str.title().str.replace("_", " ")
     #st.write(dfcleanedshort.columns)
 
     # from here on we draw the widget based on the variable type (numerical or categorical)
