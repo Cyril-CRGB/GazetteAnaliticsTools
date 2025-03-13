@@ -21,7 +21,7 @@ def predictions_body_prod():
     dfcca = load_crime_committed_analyses()
     dfcleanedshort = load_cleaned_data_short()
 
-    #dfcleanedshort.columns = dfcleanedshort.columns.str.title().str.replace("_", " ")
+    dfcleanedshort.columns = dfcleanedshort.columns.str.title().str.replace("_", " ")
     #st.write(dfcleanedshort.columns)
 
     #load cluster analysis files
@@ -41,13 +41,13 @@ def predictions_body_prod():
     #st.write(cluster_features_testing)
     #st.write(X_live)
 
-    z_live_cluster = X_live.filter(cluster_features_testing)
-    z_live_cluster = z_live_cluster[cluster_features_testing]
-    z_live_cluster = pd.DataFrame(z_live_cluster)
-    pipeline_features = cluster_pipeline.named_steps["OrdinalCategoricalEncoder"].variables
-    if list(z_live_cluster.columns) != list(pipeline_features):
-        statement = (f"Column mismatch! Expected: {pipeline_features}, but got: {list(z_live_cluster.columns)}")
-        st.write(statement)
+    #z_live_cluster = X_live.filter(cluster_features_testing)
+    #z_live_cluster = z_live_cluster[cluster_features_testing]
+    #z_live_cluster = pd.DataFrame(z_live_cluster)
+    #pipeline_features = cluster_pipeline.named_steps["OrdinalCategoricalEncoder"].variables
+    #if list(z_live_cluster.columns) != list(pipeline_features):
+    #    statement = (f"Column mismatch! Expected: {pipeline_features}, but got: {list(z_live_cluster.columns)}")
+    #    st.write(statement)
 
     # Predict on live data
     if st.button("Make Prediction"):
@@ -67,7 +67,7 @@ def DrawInputsWidgets():
     #create an empty DataFrame, which will be the live data
     X_live = pd.DataFrame([], index=[0])
 
-    #dfcleanedshort.columns = dfcleanedshort.columns.str.title().str.replace("_", " ")
+    dfcleanedshort.columns = dfcleanedshort.columns.str.title().str.replace("_", " ")
     #st.write(dfcleanedshort.columns)
 
     # from here on we draw the widget based on the variable type (numerical or categorical)
