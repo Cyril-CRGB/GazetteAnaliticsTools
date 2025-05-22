@@ -29,3 +29,8 @@ def summary_body():
         f"* 1 - The client is interested in understanding who amongs the victim dataset also had damage dealt to his/her property. This will be referred to as **Damage**.\n"
         f"* 2 - The client is interested in figuring the range of the damage that the insurance could repay to the victim. This will be referred to as **Amount**.\n"
     )
+
+    # — in your Streamlit UI —
+    st.title("My Gazette Analytics")
+    df_gaz = load_gazette_content(500)
+    st.dataframe(df_gaz)

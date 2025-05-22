@@ -162,3 +162,18 @@ Deployement issues:
 - I got rid of (uninstall) nvidia-nccl-cu12 2.23.4 package to fix slug size issue with heroku.
 
 I had to install posgresql on my local machine, fixing path settings on my local machine, then connect to CLI of Heroku in order to puhs my csv file.
+
+
+
+gazetteanaliticstools:
+
+commande: 
+
+1) pyenv install 3.9.13
+2) pip install requests xmltodict psycopg2-binary pandas
+2) python3 file_name.py
+4) pip install python-dotenv
+5) add .env file with DATABASE_URL
+6) add .env to .gitignore
+
+
