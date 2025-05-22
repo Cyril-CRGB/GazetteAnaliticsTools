@@ -4,9 +4,9 @@ import pandas as pd
 import joblib
 import psycopg2
 from psycopg2.extras import RealDictCursor
-
-
-from env import DATABASE_URL
+from dotenv import load_dotenv
+load_dotenv()
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 
 
@@ -20,7 +20,7 @@ def connect_to_db():
     try:
         return psycopg2.connect(DATABASE_URL, sslmode="require", cursor_factory=RealDictCursor)
     except Exception as e:
-        st.error(f"Connection failed: {e}")
+        st.error(f"Connection to database failed: {e}")
         return None
 
 

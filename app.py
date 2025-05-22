@@ -1,36 +1,27 @@
 import streamlit as st
 from app_pages.multipage import MultiPage
 
+st.set_page_config(
+    page_title="Gazette analytics tools",
+    page_icon="🧊",
+    layout="wide",
+    initial_sidebar_state="expanded",
+    menu_items={
+        'Get Help': 'https://www.extremelycoolapp.com/help',
+        'Report a bug': "https://www.extremelycoolapp.com/bug",
+        'About': "# This is a header. This is an *extremely* cool app!"
+    }
+)
 # load pages scripts
-from app_pages.summary import summary_body
-from app_pages.data import data_body
-from app_pages.study import study_body
-from app_pages.hypothesis import hypothesis_body
-from app_pages.cluster import cluster_body
-from app_pages.predictions_prod_env import predictions_body_prod
-from app_pages.predictions_test_env import predictions_body_test
-
-
-
+from app_pages.asummary import summary_body
+from app_pages.bdata import data_body
 
 # Create an instance of the app
-app = MultiPage(app_name= "Insurance Prospecter")
-
+app = MultiPage(app_name= "Gazette analytics tools")
 
 # App pages 
 app.add_page("Summary", summary_body)
 app.add_page("Data", data_body)
-app.add_page("Study", study_body)
-app.add_page("Hypothesis & Validation", hypothesis_body)
-app.add_page("ML Cluster", cluster_body)
-#for prod
-app.add_page("Predictions prod", predictions_body_prod)
-#for testing
-#app.add_page("Predictions testing", predictions_body_test)
-
-
-
-
 
 # Run the app
 app.run()

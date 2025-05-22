@@ -177,3 +177,5 @@ commande:
 6) add .env to .gitignore
 
 
+7) pip freeze > requirements.txt
+8) pip install -r requirements.txt

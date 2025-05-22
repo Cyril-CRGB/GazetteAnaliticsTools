@@ -4,9 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-from streamlit_data_management import load_original_data
-from streamlit_data_management import load_crime_committed_analyses
-from streamlit_data_management import load_cleaned_data_short
+from streamlit_data_management import load_gazette_content
 
 sns.set_style('dark')
 
@@ -15,9 +13,10 @@ sns.set_style('dark')
 def data_body():
 
     # load data
-    df = load_original_data()
-    dfcca = load_crime_committed_analyses()
-    dfcleanedshort = load_cleaned_data_short()
+    # — in your Streamlit UI —
+    st.title("My Gazette Analytics")
+    df_gaz = load_gazette_content(500)
+    st.dataframe(df_gaz)
     
     st.write("## Data")
     st.info(
