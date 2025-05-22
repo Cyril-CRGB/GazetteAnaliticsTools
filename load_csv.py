@@ -4,6 +4,8 @@ from psycopg2.extras import execute_values
 from dotenv import load_dotenv
 load_dotenv()
 
+# --- NEEDED THIS FILE JUST ONCE, FOR UPLOADING THE DATABASE, WHICH WAS .CVS AT THE BEGINNING ---
+
 def main():
     input_path  = "inputs/contentdata/gazette_contentdata_jupyter.csv"
     output_table = "gazette_contentdata"

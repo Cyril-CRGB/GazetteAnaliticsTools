@@ -1,6 +1,0 @@
-Cluster,Vict Sex,Weapon Used Cd,Premis Desc,Vict Age,Amount,Damage
-0,"'M': 65% , 'F': 27% , 'X': 8% ",106.0 -- 311.0,"'STREET': 35% , 'SIDEWALK': 16% , 'SINGLE FAMILY DWELLING': 10% ",23.0 -- 44.0,0.0 -- 2000.0,"'0': 72% , '1': 28% "
-1,"'X': 76% , 'M': 15% , 'F': 9% ",999.0 -- 999.0,"'STREET': 55% , 'PARKING LOT': 13% , 'OTHER BUSINESS': 9% ",0.0 -- 0.0,10000.0 -- 20000.0,"'1': 97% , '0': 3% "
-2,"'M': 46% , 'X': 31% , 'F': 23% ",500.0 -- 999.0,"'MARKET': 6% , 'CLOTHING STORE': 6% , 'OFFICE BUILDING/OFFICE': 4% ",0.0 -- 36.0,0.0 -- 2000.0,"'1': 62% , '0': 38% "
-3,"'F': 97% , 'X': 3% ",400.0 -- 999.0,"'SINGLE FAMILY DWELLING': 28% , 'MULTI-UNIT DWELLING (APARTMENT, DUPLEX, ETC)': 23% , 'STREET': 13% ",26.0 -- 48.0,0.0 -- 950.0,"'0': 61% , '1': 39% "
-4,"'M': 99% , 'X': 1% ",511.0 -- 999.0,"'SINGLE FAMILY DWELLING': 24% , 'STREET': 17% , 'MULTI-UNIT DWELLING (APARTMENT, DUPLEX, ETC)': 15% ",30.0 -- 54.0,0.0 -- 2000.0,"'1': 57% , '0': 43% "

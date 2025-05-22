@@ -18,7 +18,7 @@ def connect_to_db():
         st.error("DATABASE_URL is not set.")
         return None
     try:
-        return psycopg2.connect(DATABASE_URL, sslmode="require", cursor_factory=RealDictCursor)
+        return psycopg2.connect(DATABASE_URL, sslmode="require") #, cursor_factory=RealDictCursor
     except Exception as e:
         st.error(f"Connection to database failed: {e}")
         return None
