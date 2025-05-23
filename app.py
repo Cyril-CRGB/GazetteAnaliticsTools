@@ -3,7 +3,7 @@ from app_pages.amultipage import MultiPage
 
 st.set_page_config(
     page_title="Gazette analytics tools",
-    page_icon="🧊",
+    page_icon="outputs/pictures/structura_logo_upscaled_8x_favicon-48x48.png",
     layout="wide",
     initial_sidebar_state="expanded",
     menu_items={
@@ -17,6 +17,9 @@ from app_pages.bsummary import summary_body
 from app_pages.cdata import data_body
 from app_pages.dcoverage import coverage_body
 from app_pages.eretrieve import retrieve_body
+from app_pages.fdelete import delete_body
+from app_pages.gnewentriesstats import newentriesstats_body
+from app_pages.hnewentriesstatsyoy import newentriesstatsyoy_body
 
 # Create an instance of the app
 app = MultiPage(app_name= "Gazette analytics tools")
@@ -26,6 +29,9 @@ app.add_page("🔡 Summary", summary_body)
 app.add_page("📑 Data", data_body)
 app.add_page("📅 Coverage", coverage_body)
 app.add_page("📥 Retrieve", retrieve_body)
+app.add_page("🗑️ Delete", delete_body)
+app.add_page("🆕 New Entries", newentriesstats_body)
+app.add_page("🆕 New Entries YoY", newentriesstatsyoy_body)
 
 # Run the app
 app.run()

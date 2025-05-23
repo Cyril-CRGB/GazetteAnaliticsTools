@@ -28,6 +28,14 @@ def coverage_body():
 
     st.markdown("""---""")
 
+    if st.button("🔄 Refresh data"):
+        # Clear both caches so next loads hit the DB/API anew
+        load_gazette_content.clear()
+        load_publication_coverage.clear()
+        st.success("🆕 Caches cleared — loading fresh data…")
+
+    st.markdown("""---""")
+
     st.header("📅 Publication Date Coverage")
     cov = load_publication_coverage()
     if cov.empty:
@@ -53,19 +61,19 @@ def coverage_body():
     )
     st.altair_chart(chart, use_container_width=True)
     # -- summary/status for users --
-    total   = len(cov)
-    present = int(cov["present"].sum())
+    today = date.today()
+    cov_until_today = cov[cov["date"] <= today]
+    total   = len(cov_until_today)
+    present = int(cov_until_today["present"].sum())
     missing = total - present
     if missing == 0:
-        st.success(f"🎉 All {total} publication dates are present in the database.")
+        st.success(f"🎉 All {total} publication dates up to {today} are present in the database.")
     else:
         st.error(
-            f"{missing} of {total} dates are missing! "
+            f"{missing} of {total} dates up to {today} are missing! "
             "Hover over the white circles to see which ones."
         )
         if st.checkbox("🔍 See the list of missing publication dates:"):
-            st.write(", ".join(str(d) for d in cov.loc[~cov.present, "date"]))
+            st.write(", ".join(str(d) for d in cov_until_today.loc[~cov_until_today.present, "date"]))
 
     st.markdown("""---""")
-
-    

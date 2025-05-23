@@ -211,7 +211,7 @@ st.info([
 
 st.header("🔍 My Search Tool")
 st.write("Here’s some info 📊 and a warning ⚠️")
-🤝
+🤝🆕📈
 
 Emojipedia – the de-facto reference for every emoji, with search and copy-to-clipboard:
 https://emojipedia.org/
