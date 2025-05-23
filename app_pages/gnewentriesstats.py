@@ -15,7 +15,7 @@ def newentriesstats_body():
     # load data
     df_gaz = load_gazette_content()
 
-    st.header("🆕 Analysis of the new entries of the last publication")
+    st.header("🆕 Analysis of the new entries, Today vs. Same Day Last Year")
 
     # ── Refresh control ────────────────────────────────────────────────
     if st.button("🔄 Refresh"):
@@ -28,59 +28,52 @@ def newentriesstats_body():
         st.warning("No Gazette data loaded.")
         return
 
-    # ── Filter to New entries and normalize date ───────────────────────
+    # Filter to New entries and parse dates
     df_new = df[df["entrytype"] == "New entries"].copy()
-    df_new["publicationdate"] = pd.to_datetime(
+    df_new["pubDate"] = pd.to_datetime(
         df_new["publicationdate"], errors="coerce"
-    )
-    df_new = df_new.dropna(subset=["publicationdate"])
-    df_new["year"] = df_new["publicationdate"].dt.year
+    ).dt.date
+    df_new = df_new.dropna(subset=["pubDate"])
 
-    # ── Compute current vs previous year ───────────────────────────────
-    today = date.today()
-    cy = today.year
-    py = cy - 1
+    today      = date.today()
+    last_year  = today.replace(year=today.year - 1)
 
-    # Group counts by legal form and year
-    grp = (
-        df_new
-        .groupby(["company_legalform", "year"])
-        .size()
-        .unstack(fill_value=0)
-    )
+    # Count per legalForm for today and for same day last year
+    today_counts     = df_new[df_new["pubDate"] == today]     .groupby("company_legalform").size()
+    lastyear_counts  = df_new[df_new["pubDate"] == last_year] .groupby("company_legalform").size()
 
-    # Build stats rows
+    all_forms = sorted(set(today_counts.index) | set(lastyear_counts.index))
+
+    # Build rows
     rows = []
-    for form in grp.index:
-        prev_count = grp.loc[form].get(py, 0)
-        curr_count = grp.loc[form].get(cy, 0)
-        ratio = (
-            "n/a"
-            if prev_count == 0
-            else round(curr_count / prev_count - 1, 4)
-        )
+    for form in all_forms:
+        cnt_today    = int(today_counts.get(form, 0))
+        cnt_lastyear = int(lastyear_counts.get(form, 0))
+        if cnt_lastyear == 0:
+            ratio = "n/a"
+        else:
+            ratio = round(cnt_today / cnt_lastyear - 1, 4)
         rows.append({
             "company_legalform": form,
-            str(py): prev_count,
-            str(cy): curr_count,
-            "ratio": ratio
+            str(last_year):     cnt_lastyear,
+            str(today):         cnt_today,
+            "ratio":            ratio
         })
 
     # Total row
-    total_prev = sum(r[str(py)] for r in rows)
-    total_curr = sum(r[str(cy)] for r in rows)
-    total_ratio = (
-        "n/a"
-        if total_prev == 0
-        else round(total_curr / total_prev - 1, 4)
-    )
+    total_today    = sum(r[str(today)]      for r in rows)
+    total_lastyear = sum(r[str(last_year)] for r in rows)
+    if total_lastyear == 0:
+        total_ratio = "n/a"
+    else:
+        total_ratio = round(total_today / total_lastyear - 1, 4)
     rows.append({
-        "company_legalform": "Total new entries",
-        str(py): total_prev,
-        str(cy): total_curr,
-        "ratio": total_ratio
+        "company_legalform": f"Total new entries",
+        str(last_year):      total_lastyear,
+        str(today):          total_today,
+        "ratio":             total_ratio
     })
 
-    # ── Display table ───────────────────────────────────────────────────
+    # Display table
     df_stats = pd.DataFrame(rows)
     st.table(df_stats)

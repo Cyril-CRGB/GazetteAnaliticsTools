@@ -20,6 +20,7 @@ from app_pages.eretrieve import retrieve_body
 from app_pages.fdelete import delete_body
 from app_pages.gnewentriesstats import newentriesstats_body
 from app_pages.hnewentriesstatsyoy import newentriesstatsyoy_body
+from app_pages.inewclientsoftheday import newclientsoftheday_body
 
 # Create an instance of the app
 app = MultiPage(app_name= "Gazette analytics tools")
@@ -32,6 +33,8 @@ app.add_page("📥 Retrieve", retrieve_body)
 app.add_page("🗑️ Delete", delete_body)
 app.add_page("🆕 New Entries", newentriesstats_body)
 app.add_page("🆕 New Entries YoY", newentriesstatsyoy_body)
+app.add_page("🤝 New Client of the day", newclientsoftheday_body)
+
 
 # Run the app
 app.run()
