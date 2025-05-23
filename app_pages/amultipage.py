@@ -1,4 +1,4 @@
-# app_pages/multipage.py
+# app_pages/amultipage.py
 
 import streamlit as st
 

@@ -179,3 +179,48 @@ commande:
 
 7) pip freeze > requirements.txt
 8) pip install -r requirements.txt
+
+
+Streamlit’s st.info() box uses Markdown under the hood, and in Markdown a single \n doesn’t force a line‐break. You have two easy fixes:
+### 1) Use two spaces before your newline
+In Markdown, ending a line with two spaces + \n creates a <br>:
+st.info(
+    f"This page is designed to explain the data retrieved on the Gazette server.  \n"
+    f"The dataset was correctly loaded. It contains {df_gaz.shape[0]} rows and {df_gaz.shape[1]} columns."
+)
+Note the two spaces just before \n on the first line.
+
+### 2) Separate paragraphs with a double‐newline
+If you want each sentence in its own paragraph, put an empty line between them:
+
+st.info(
+    "This page is designed to explain the data retrieved on the Gazette server.\n\n"
+    f"The dataset was correctly loaded. It contains {df_gaz.shape[0]} rows and {df_gaz.shape[1]} columns."
+)
+The \n\n tells Markdown “new paragraph,” which definitely shows as a line break.
+
+### 3) Bonus: pass a list of strings
+st.info() will also render each element of a list as its own line:
+
+st.info([
+    "This page is designed to explain the data retrieved on the Gazette server.",
+    f"The dataset was correctly loaded. It contains {df_gaz.shape[0]} rows and {df_gaz.shape[1]} columns."
+])
+
+
+
+st.header("🔍 My Search Tool")
+st.write("Here’s some info 📊 and a warning ⚠️")
+🤝
+
+Emojipedia – the de-facto reference for every emoji, with search and copy-to-clipboard:
+https://emojipedia.org/
+
+Get Emoji – a super-simple website to copy emojis:
+https://getemoji.com/
+
+Unicode Charts – the official Unicode Consortium pages, organized by block:
+https://unicode.org/emoji/charts/full-emoji-list.html
+
+
+if psycopg2 keep closing use SQLAlchemy
