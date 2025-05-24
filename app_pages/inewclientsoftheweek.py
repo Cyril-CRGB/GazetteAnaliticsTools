@@ -1,45 +1,45 @@
-# app_pages/gnewentriesstats.py
+# app_pages/inewclientsoftheday.py
+
 import streamlit as st
-import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-from datetime import date
-from sqlalchemy import text
+from datetime import date, timedelta
 from streamlit_data_management import load_gazette_content
 
-sns.set_style('dark')
+def inewclientsoftheweek_body():
+    st.header("🆕 New Clients This Week")
 
-def newclientsoftheday_body():
-
-    # load data
-    df_gaz = load_gazette_content()
-
-    st.header("🤝 New potential clients")
-
-    # ── Refresh control ────────────────────────────────────────────────
-    if st.button("🔄 Refresh"):
-        load_gazette_content.clear()
-        st.success("Cache cleared. Data will refresh below.")
-    
-        # 1) Load and fixed‐filter the data
+    # 1) Load all data
     df = load_gazette_content(limit=None)
     if df.empty:
         st.warning("No Gazette data loaded.")
         return
 
+    # 2) Compute the week span: this Monday → today
     today = date.today()
-    # ensure publicationDate is a date
-    df["pubDate"] = pd.to_datetime(df["publicationdate"], errors="coerce").dt.date
+    monday = today - timedelta(days=today.weekday())
+
+    df["pubDate"] = (
+        pd.to_datetime(df["publicationdate"], errors="coerce")
+          .dt.date
+    )
+    # filter entryType and this week
     df = df[
         (df["entrytype"] == "New entries") &
-        (df["pubDate"]    == today)
+        (df["pubDate"] >= monday) &
+        (df["pubDate"] <= today)
     ]
     if df.empty:
-        st.info(f"No New entries for {today}.")
+        st.warning(f"No New entries from {monday} through {today}.")
         return
 
-    # 2) User‐selectable filters
+    # 3) Show date span and list of seats in header
+    # seats = sorted(df["company_seat"].dropna().unique())
+    st.info(
+        f"Showing New entries from **{monday}** through **{today}** "
+        f"(this week).  \n"
+    )
+
+    # 4) User‐selectable filters (minus seats)
     langs = st.multiselect(
         "Language",
         options=sorted(df["language"].dropna().unique()),
@@ -50,11 +50,6 @@ def newclientsoftheday_body():
         options=sorted(df["cantons"].dropna().unique()),
         default=sorted(df["cantons"].dropna().unique())
     )
-    seats = st.multiselect(
-        "Company Seat",
-        options=sorted(df["company_seat"].dropna().unique()),
-        default=sorted(df["company_seat"].dropna().unique())
-    )
     forms = st.multiselect(
         "Legal Form",
         options=sorted(df["company_legalform"].dropna().unique()),
@@ -63,18 +58,15 @@ def newclientsoftheday_body():
 
     df = df[
         df["language"].isin(langs) &
-        df["cantons"].isin(cants)  &
-        df["company_seat"].isin(seats) &
+        df["cantons"].isin(cants) &
         df["company_legalform"].isin(forms)
     ]
     if df.empty:
         st.info("No entries match selected filters.")
         return
 
-    # 3) Sort by company_name
+    # 5) Sort & tabs by first letter
     df = df.sort_values("company_name")
-
-    # 4) Create one tab per starting letter
     letters = sorted(df["company_name"].str[0].str.upper().unique())
     tabs = st.tabs(letters)
 
@@ -85,11 +77,11 @@ def newclientsoftheday_body():
                 st.write("No entries under this letter.")
                 continue
 
-            # 5) Show each row as an expander
             for _, row in sub.iterrows():
                 header = (
                     f"{row['company_uid']} | {row['company_name']} | "
-                    f"{row['company_street_and_number']} | {row['company_zip_and_town']}"
+                    f"{row['company_street_and_number']} | {row['company_zip_and_town']} | "
+                    f"{row['company_seat']}"
                 )
                 with st.expander(header):
                     st.write("**Publication Text:**")

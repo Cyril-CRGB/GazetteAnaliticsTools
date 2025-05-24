@@ -4,29 +4,32 @@ def summary_body():
 
     # st.title("Machin Learning Project for Los Angeles based insurance companies")
     
-    st.write("## Summary")
+    st.header("🔡 Summary")
 
     st.info(
         f"**Project Terms & Jargon**\n"
-        f"* **Dataset** is a collection of data that is used for analysis or training machine learning models.\n"
-        f"* **Feature** refers to an individual measurable property or characteristic of the dataset.\n"
-        f"* **Damage** refers to possibility of an individual living in Los Angeles and beeing victim of a crime to ask an insurance for compensation of the damage.\n"
-        f"* **Amount** refers to the evaluation of the amount that the victim could ask for.\n"
+        f"* **Explains** the **data** and gives exemples.\n"
+        f"* **Covers** the **quality** of the data stored in our **database**.\n"
+        f"* **Retrieves** the data for a **specific day**.\n"
+        f"* **Deletes** the data for a **specific day**.\n"
         f"\n"
-        f"This application is using a **free public** dataset from Kaggle called 'Crime_Data_from_2020_to_Present.csv', and showcases the use of varius Machine Learning tasks like: *classification*, *regression*, and *clustering*.\n"
-        f"\n"
-        f"Find the Dataset on https://www.kaggle.com/datasets/candacegostinski/crime-data-analysis/data.\n"
+        f"This application is using the public API from the https://official-gazettes-portal.ch.\n\n"
+        f"We are only interested in: \n" 
+        f"* **HR01** = 'New entries', \n"
+        f"* **HR02** = 'Change', \n"
+        f"* **HR03** = 'Deletion'. \n"
     )
 
     st.write(
-        f"* For additional information, please visit and **read** the "
-        f"[PP5_My_project](https://github.com/Cyril-CRGB/PP5_My_project.git)."
+        f"For additional information, please visit and **read** my Github page: "
+        f"[GazetteAnaliticsTools](https://github.com/Cyril-CRGB/GazetteAnaliticsTools.git)."
     )
 
 
     st.success(
-        f"The project has 2 business requirements:\n"
-        f"* 1 - The client is interested in understanding who amongs the victim dataset also had damage dealt to his/her property. This will be referred to as **Damage**.\n"
-        f"* 2 - The client is interested in figuring the range of the damage that the insurance could repay to the victim. This will be referred to as **Amount**.\n"
+        f"The project has 3 business requirements:\n"
+        f"* 1 - Create an usable database and functions to manage it.\n"
+        f"* 2 - Create an easy to understand and breathtaking publishable report.\n"
+        f"* 3 - Create an AI assisted Client Relationship Manager (CRM) application.\n"
     )
 

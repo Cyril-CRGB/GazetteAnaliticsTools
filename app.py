@@ -1,6 +1,12 @@
 import streamlit as st
 from app_pages.amultipage import MultiPage
 
+import os
+from dotenv import load_dotenv
+load_dotenv()
+import openai
+openai.api_key = os.getenv("OPENAI_API_KEY")
+
 st.set_page_config(
     page_title="Gazette analytics tools",
     page_icon="outputs/pictures/structura_logo_upscaled_8x_favicon-48x48.png",
@@ -20,7 +26,8 @@ from app_pages.eretrieve import retrieve_body
 from app_pages.fdelete import delete_body
 from app_pages.gnewentriesstats import newentriesstats_body
 from app_pages.hnewentriesstatsyoy import newentriesstatsyoy_body
-from app_pages.inewclientsoftheday import newclientsoftheday_body
+from app_pages.inewclientsoftheweek import inewclientsoftheweek_body
+from app_pages.joutreach import newoutreach_body
 
 # Create an instance of the app
 app = MultiPage(app_name= "Gazette analytics tools")
@@ -33,8 +40,8 @@ app.add_page("📥 Retrieve", retrieve_body)
 app.add_page("🗑️ Delete", delete_body)
 app.add_page("🆕 New Entries", newentriesstats_body)
 app.add_page("🆕 New Entries YoY", newentriesstatsyoy_body)
-app.add_page("🤝 New Client of the day", newclientsoftheday_body)
-
+app.add_page("🆕 New Client of the week", inewclientsoftheweek_body)
+app.add_page("🤖 New AI-Powered Outreach", newoutreach_body)
 
 # Run the app
 app.run()

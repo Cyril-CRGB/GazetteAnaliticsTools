@@ -224,3 +224,11 @@ https://unicode.org/emoji/charts/full-emoji-list.html
 
 
 if psycopg2 keep closing use SQLAlchemy
+
+Here’s the full suite of Streamlit message‐box helpers and their colors:
+| Helper           | Color      | Use for…                                   |
+| ---------------- | ---------- | ------------------------------------------ |
+| `st.success`     | Green      | Confirmation of success                    |
+| `st.info`        | Blue       | Neutral informational messages             |
+| `st.warning`     | Yellow     | Non‐blocking warnings (what you asked for) |
+| `st.error`       | Red        | Blocking errors or failures                |

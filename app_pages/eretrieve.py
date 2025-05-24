@@ -5,15 +5,18 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import altair as alt
 from datetime import date
+from sqlalchemy import text
 
-from streamlit_data_management import load_gazette_content
+from streamlit_data_management import load_gazette_content, get_engine_resource
 from src.streamlit_retrievepublication import main as fetch_and_upload
+from src.streamlit_calculation import load_publication_coverage, get_publication_date_bounds
 
 sns.set_style('dark')
 
 def retrieve_body():
     # load data
     df_gaz = load_gazette_content()
+    earliest, latest = get_publication_date_bounds()
     
     if df_gaz.empty:
         st.warning(
@@ -23,7 +26,8 @@ def retrieve_body():
     else:
         st.info(
             f"This page is designed to **RETRIEVE** the data from the Gazette server.  \n"
-            f"The dataset was correctly loaded. It contains {df_gaz.shape[0]} rows and {df_gaz.shape[1]} columns. \n"
+            f"The dataset was correctly loaded, and it contains **{df_gaz.shape[0]} rows** and **{df_gaz.shape[1]} columns**.  \n"
+            f"Going from **{earliest}** up to **{latest}**. \n"
         )
 
     st.markdown("""---""")
@@ -45,13 +49,38 @@ def retrieve_body():
 
     # 2. Trigger fetch/upload
     if st.button("Fetch & Upload"):
-        with st.spinner("Contacting API and uploading to database…"):
-            try:
-                fetch_and_upload(target_day=target_day, page_size=page_size)
-                load_gazette_content.clear()
-                st.success("✅ Done! Data has been fetched and upserted.")
-            except Exception as e:
-                st.error(f"❌ Failed: {e}")
+        engine = get_engine_resource()
+        # 2a. Check if any rows already exist for this date
+        with st.spinner("Checking if database already contains this publication date."):
+            with engine.connect() as conn:
+                existing_count = conn.execute(
+                    text("""
+                        SELECT COUNT(*) 
+                        FROM gazette_contentdata 
+                        WHERE publicationDate = :pub_date
+                    """),
+                    {"pub_date": target_day}
+                ).scalar()
+        if existing_count > 0:
+            st.warning(
+                f"⚠️ There are already {existing_count} rows in the database "
+                f"for {target_day}. Skipping 'Fetch & Upload'."
+            )
+        else:
+            # 2b. No existing rows → do the fetch & upsert
+            with st.spinner("Contacting API and uploading to database…"):
+                try:
+                    fetch_and_upload(target_day=target_day, page_size=page_size)
+                    st.success("✅ Done! Data has been fetched and upserted.")
+                    # 2c. Clear caches so other pages reload fresh
+                    load_gazette_content.clear()
+                    load_publication_coverage.clear()
+                    get_publication_date_bounds.clear()
+                except Exception as e:
+                    st.error(
+                        f"❌ Failed: {e}\n"
+                        "Go to 'Delete' page and remove this date to avoid partial data."
+                    )
 
     st.markdown("---")
 

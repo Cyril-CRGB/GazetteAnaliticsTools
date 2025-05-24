@@ -4,12 +4,13 @@ import streamlit as st
 from datetime import date
 from sqlalchemy import text
 from streamlit_data_management import load_gazette_content
-from src.streamlit_calculation import load_publication_coverage
+from src.streamlit_calculation import load_publication_coverage, get_publication_date_bounds
 from src.streamlit_retrievepublication import get_engine
 
 def delete_body():
     # load data
     df_gaz = load_gazette_content()
+    earliest, latest = get_publication_date_bounds()
     if df_gaz.empty:
         st.warning(
             f"This page is designed to **DELETE** the data from the Gazette database.  \n"
@@ -18,7 +19,8 @@ def delete_body():
     else:
         st.info(
             f"This page is designed to **DELETE** the data from the Gazette database.  \n"
-            f"The dataset was correctly loaded. It contains {df_gaz.shape[0]} rows and {df_gaz.shape[1]} columns. \n"
+            f"The dataset was correctly loaded, and it contains **{df_gaz.shape[0]} rows** and **{df_gaz.shape[1]} columns**.  \n"
+            f"Going from **{earliest}** up to **{latest}**. \n"
         )
 
     st.markdown("""---""")

@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 from streamlit_data_management import load_gazette_content
-from src.streamlit_calculation import show_columnsheaders_and_an_example
+from src.streamlit_calculation import show_columnsheaders_and_an_example, get_publication_date_bounds
 
 sns.set_style('dark')
 
@@ -13,6 +13,7 @@ def data_body():
 
     # load data
     df_gaz = load_gazette_content()
+    earliest, latest = get_publication_date_bounds()
     
     if df_gaz.empty:
         st.warning(
@@ -22,7 +23,8 @@ def data_body():
     else:
         st.info(
             f"This page is designed to **EXPLAIN** the data retrieved on the Gazette server.  \n"
-            f"The dataset was correctly loaded. It contains {df_gaz.shape[0]} rows and {df_gaz.shape[1]} columns. \n"
+            f"The dataset was correctly loaded, and it contains **{df_gaz.shape[0]} rows** and **{df_gaz.shape[1]} columns**.  \n"
+            f"Going from **{earliest}** up to **{latest}**. \n"
         )
 
     st.write("""---""")
